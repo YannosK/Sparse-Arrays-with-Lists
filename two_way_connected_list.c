@@ -182,10 +182,19 @@ void delete(node_pointer *head)
 			}
 			
 			node_to_delete = aux->next;
-			aux2 = node_to_delete->next; //not sure if proper way. But aux2 must be two nodes ahead of aux
-			aux->next = aux2;
-			aux2->back = aux;
-			free(node_to_delete);
+
+			if (node_to_delete->next != NULL)
+			{
+				aux2 = node_to_delete->next; //not sure if proper way. But aux2 must be two nodes ahead of aux
+				aux->next = aux2;
+				aux2->back = aux;
+				free(node_to_delete);
+			}
+			else
+			{
+				aux->next = node_to_delete->next;
+				free(node_to_delete);
+			}
 		}
 		
 		if (d == (*head)->data  &&  (*head) != NULL)
