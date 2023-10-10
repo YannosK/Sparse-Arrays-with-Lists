@@ -92,9 +92,10 @@ void insert (node_pointer *head)
 	
 	new_node->data = new_node_data;
 	new_node->next = NULL;
-	
+	new_node->back = NULL;
+
 	// the case that the list is not empty
-	if ((*head) != NULL) //warning: new_node is a dereferneced pointer. head is not dereferenced
+	if ((*head) != NULL) //warning: head is a dereferneced pointer. new_node is not dereferenced
 	{
         // the case that the new node should go after head, so we traverse the list to find the proper spot
 		if (new_node->data > (*head)->data)
@@ -108,6 +109,7 @@ void insert (node_pointer *head)
 		    }
 		
 		    new_node->next = aux->next;
+            new_node->back = aux;
 	     	aux->next = new_node;
 		
     		printf("\tData:%d\n\n\n", new_node->data);
