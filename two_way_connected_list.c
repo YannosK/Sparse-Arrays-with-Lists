@@ -152,7 +152,7 @@ void print (node_pointer head)
 }
 
 
-
+// PROBLEMS
 void delete(node_pointer *head) 
 {
 	node_pointer node_to_delete, aux, aux2;
