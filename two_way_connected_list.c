@@ -119,6 +119,7 @@ void insert (node_pointer *head)
 		if(new_node->data < (*head)->data)
 		{
 			new_node->next = *head;
+			(*head)->back = new_node;
     		*head = new_node;
 		
     		printf("\tData:%d\n\n\n", new_node->data);
@@ -160,7 +161,7 @@ void print (node_pointer head)
 
 void delete(node_pointer *head) 
 {
-	node_pointer node_to_delete, aux;
+	node_pointer node_to_delete, aux, aux2;
 		
 	node_to_delete = (node_pointer)malloc(sizeof(struct node));
 		
@@ -176,8 +177,8 @@ void delete(node_pointer *head)
 	    scanf("%d", &d);
 	    getchar();
 	    
-	    aux = *head;	    
-	    
+	    aux = *head;
+
         // the case that the list does not only contain the head
 	    if (d != (*head)->data  &&  d > (*head)->data  &&  (*head) != NULL  &&  (*head)->next!=NULL)
 		{
@@ -187,13 +188,16 @@ void delete(node_pointer *head)
 			}
 			
 			node_to_delete = aux->next;
-			aux->next = node_to_delete->next;
+			aux2 = node_to_delete->next; //not sure if proper way. But aux2 must be two nodes ahead of aux
+			aux->next = aux2;
+			aux2->back = aux;
 			free(node_to_delete);
 		}
 		
 		if (d == (*head)->data  &&  (*head) != NULL)
 	    {	    	    	
 	    	(*head) = aux->next; //or (*head)->next
+			(*head)->back = NULL;
 	    	free(aux);	    	
 		}
 	}
