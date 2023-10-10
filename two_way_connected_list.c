@@ -197,10 +197,18 @@ void delete(node_pointer *head)
 			}
 		}
 		
-		if (d == (*head)->data  &&  (*head) != NULL)
+		if (d == (*head)->data  &&  (*head) != NULL  &&  (*head)->next != NULL)
 	    {	    	    	
 	    	(*head) = aux->next; //or (*head)->next
 			(*head)->back = NULL;
+	    	free(aux);	    	
+		}
+
+		if (d == (*head)->data  &&  (*head) != NULL  &&  (*head)->next == NULL)
+	    {	    	    	
+	    	(*head) = NULL;
+			(*head)->next = NULL;
+			(*head)->back = NULL; //might be redundant
 	    	free(aux);	    	
 		}
 	}
