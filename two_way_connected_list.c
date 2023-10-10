@@ -57,12 +57,6 @@ int main (void)
 			    print(head);			    
 	    	}
 	    	
-	    	if (user_input == 'P')
-	    	{
-	    		printf("\n\n\tPRINT 2\n\n");
-			    print2(head);			    
-	    	}
-	    	
 	    	if (user_input == 'd')
 	    	{
 	    		printf("\n\n\tDELETE\n\n");
