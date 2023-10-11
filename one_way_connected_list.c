@@ -37,6 +37,7 @@ int main (void)
 		
 	while (user_input != 'q')
 	{
+		printf("\nHead has data %d", head->data);
 		printf("\nPrevious choice %c\n", user_input);
 		printf("q : quit, i : insert new node, p : prints nodes' data, P : prints nodes' data using recursive code, d: deletes node using its data\n");
 		
@@ -55,8 +56,7 @@ int main (void)
 	        if (user_input == 'i')
 	        {
 		    	printf("\n\n\tINSERT\n\n");
-		    	insert(head);
-				printf("\n[OUTSIDE INSERT] Our new node is the head and it has data %d while it points to %p\n", head->data, head->next);  	
+		    	insert(head);  	
 		    }
 				   	
 		    if (user_input == 'p')
