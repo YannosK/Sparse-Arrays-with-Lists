@@ -24,6 +24,7 @@ void insert(node_pointer *head);
 void print(node_pointer head);
 void print2(node_pointer head); // I am using two print functions just for fun
 void delete(node_pointer *head);
+void node(void);
 
 
 
@@ -38,7 +39,7 @@ int main (void)
 	while (user_input != 'q')
 	{
 		printf("\nPrevious choice %c\n", user_input);
-		printf("q : quit, i : insert new node, p : prints nodes' data, P : prints nodes' data using recursive code, d: deletes node using its data\n");
+		printf("q : quit, i : insert new node, p : prints nodes' data, P : prints nodes' data using recursive code, d: deletes node using its data, n: access a specific node's attributes\n");
 		
 		if (user_input != 'q')
 		{
@@ -74,6 +75,12 @@ int main (void)
 	    	{
 	    		printf("\n\n\tDELETE\n\n");
 			    delete(&head);			    
+	    	}		
+
+			if (user_input == 'n')
+	    	{
+	    		printf("\n\n\tNODE ATTRIBUTES\n\n");
+			    node(&head);		    
 	    	}		
 		}
 	}
@@ -219,4 +226,11 @@ void delete(node_pointer *head)
 	    	free(aux);	    	
 		}
 	}
+}
+
+
+
+void node(void)
+{
+	
 }
