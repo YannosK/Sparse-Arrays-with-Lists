@@ -55,7 +55,8 @@ int main (void)
 	        if (user_input == 'i')
 	        {
 		    	printf("\n\n\tINSERT\n\n");
-		    	insert(head);		    	
+		    	insert(head);
+				printf("\n[OUTSIDE INSERT] Our new node is the head and it has data %d while it points to %p\n", head->data, head->next);  	
 		    }
 				   	
 		    if (user_input == 'p')
@@ -117,7 +118,7 @@ void insert (node_pointer head)
 		    new_node->next = aux->next;
 	     	aux->next = new_node;
 		
-    		printf("\tData:%d\n\n\n", new_node->data);
+    		//printf("\tData:%d\n\n\n", new_node->data);
 		}
 		
         // the case that the new node should go before head, so it becomes the new head
@@ -126,7 +127,7 @@ void insert (node_pointer head)
 			new_node->next = head;
     		head = new_node;
 		
-    		printf("\tData:%d\n\n\n", new_node->data);
+    		//printf("\tData:%d\n\n\n", new_node->data);
 		}
 	}
 
@@ -135,7 +136,8 @@ void insert (node_pointer head)
 	{   
 		head = new_node;
 		
-		printf("\tData:%d\n\n\n", new_node->data);
+		//printf("\tData:%d\n\n\n", new_node->data);
+		printf("\n[INSIDE INSERT] Our new node is the head and it has data %d while it points to %p", head->data, head->next);
 	}
 	
 }
@@ -164,7 +166,7 @@ void print (node_pointer head)
 
 void print2 (node_pointer head)
 {
-	if (head ==NULL)
+	if (head == NULL)
 	{
 		printf("\tThe list is empty\n\n");
 	}
