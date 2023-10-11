@@ -20,10 +20,10 @@ struct node
 // head is the first list member
 node_pointer head;
 
-void insert(node_pointer *head);
+void insert(node_pointer head);
 void print(node_pointer head);
 void print2(node_pointer head); // I am using two print functions just for fun
-void delete(node_pointer *head);
+void delete(node_pointer head);
 
 
 
@@ -55,7 +55,7 @@ int main (void)
 	        if (user_input == 'i')
 	        {
 		    	printf("\n\n\tINSERT\n\n");
-		    	insert(&head);		    	
+		    	insert(head);		    	
 		    }
 				   	
 		    if (user_input == 'p')
@@ -73,7 +73,7 @@ int main (void)
 	    	if (user_input == 'd')
 	    	{
 	    		printf("\n\n\tDELETE\n\n");
-			    delete(&head);			    
+			    delete(head);			    
 	    	}		
 		}
 	}
@@ -84,7 +84,7 @@ int main (void)
 
 
 // inserts new node
-void insert (node_pointer *head)
+void insert (node_pointer head)
 {
 	node_pointer new_node, aux; 
 	int new_node_data;
@@ -101,12 +101,12 @@ void insert (node_pointer *head)
 	new_node->next = NULL;
 	
 	// the case that the list is not empty
-	if ((*head) != NULL) //warning: new_node is a dereferneced pointer. head is not dereferenced
+	if (head != NULL) //warning: new_node is a dereferneced pointer. head is not dereferenced
 	{
         // the case that the new node should go after head, so we traverse the list to find the proper spot
-		if (new_node->data > (*head)->data)
+		if (new_node->data > head->data)
 		{
-			aux = *head;
+			aux = head;
 			
             // traversing the list until temp->data is smaller than the next node's data
 		    while((aux->next != NULL) && (aux->next->data < new_node->data))
@@ -121,19 +121,19 @@ void insert (node_pointer *head)
 		}
 		
         // the case that the new node should go before head, so it becomes the new head
-		if(new_node->data < (*head)->data)
+		if(new_node->data < head->data)
 		{
-			new_node->next = *head;
-    		*head = new_node;
+			new_node->next = head;
+    		head = new_node;
 		
     		printf("\tData:%d\n\n\n", new_node->data);
 		}
 	}
 
     // the case that the list is empty			
-	if ((*head) == NULL)
+	if (head == NULL)
 	{   
-		*head = new_node;
+		head = new_node;
 		
 		printf("\tData:%d\n\n\n", new_node->data);
 	}
@@ -180,28 +180,28 @@ void print2 (node_pointer head)
 }
 
 
-void delete(node_pointer *head) 
+void delete(node_pointer head) 
 {
 	node_pointer node_to_delete, aux;
 		
 	node_to_delete = (node_pointer)malloc(sizeof(struct node));
 		
-	if ((*head) == NULL)
+	if (head == NULL)
 	{
 		printf("\tThe list is empty\n\n");
 	}
 	
-	if ((*head) != NULL)
+	if (head != NULL)
 	{
 		int d;
 		printf("\tData of node to delete: ");
 	    scanf("%d", &d);
 	    getchar();
 	    
-	    aux = *head;	    
+	    aux = head;	    
 	    
         // the case that the list does not only contain the head
-	    if (d != (*head)->data  &&  d > (*head)->data  &&  (*head) != NULL  &&  (*head)->next!=NULL)
+	    if (d != head->data  &&  d > head->data  &&  head != NULL  &&  head->next!=NULL)
 		{
 		    while (aux->next->data != d  &&  aux->next != NULL)
 			{
@@ -213,9 +213,9 @@ void delete(node_pointer *head)
 			free(node_to_delete);
 		}
 		
-		if (d == (*head)->data  &&  (*head) != NULL)
+		if (d == head->data  &&  head != NULL)
 	    {	    	    	
-	    	(*head) = aux->next; //or (*head)->next
+	    	head = aux->next; //or head->next
 	    	free(aux);	    	
 		}
 	}
