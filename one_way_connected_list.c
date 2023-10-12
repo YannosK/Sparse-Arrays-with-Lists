@@ -261,7 +261,11 @@ void node(node_pointer head)
 
 			if (aux->data == n)
 			{
-				printf("\n\tData: %d\n\tNext: %d", aux->data, aux->next->data);
+				printf("\n\tData: %d", aux->data);
+				if (aux->next != NULL)
+				{
+					printf("\n\tNext: %d\n\n", aux->next->data);
+				}			
 			}
 			else
 			{
@@ -278,7 +282,12 @@ void node(node_pointer head)
 		
 		if (n == head->data)
 	    {	    	    	
-	    	printf("\n\tYou added the head\n\tData: %d\n\tNext: %d", aux->data, aux->next->data);  	
+	    	printf("\n\tYou added the head");
+			printf("\n\tData: %d", aux->data);
+			if (aux->next != NULL)
+			{
+				printf("\n\tNext: %d\n\n", aux->next->data);
+			}	
 		}
 	}
 }
