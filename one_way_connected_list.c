@@ -84,7 +84,7 @@ int main (void)
 
 
 // inserts new node
-void insert (node_pointer *head)
+void insert (node_pointer *head) //warning: you pass a pointer to head as an argument because otherwise head won't change globally
 {
 	node_pointer new_node, aux; 
 	int new_node_data;
@@ -101,7 +101,7 @@ void insert (node_pointer *head)
 	new_node->next = NULL;
 	
 	// the case that the list is not empty
-	if ((*head) != NULL) //warning: new_node is a dereferneced pointer. head is not dereferenced
+	if ((*head) != NULL)
 	{
         // the case that the new node should go after head, so we traverse the list to find the proper spot
 		if (new_node->data > (*head)->data)
