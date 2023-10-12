@@ -245,7 +245,7 @@ void node(node_pointer head)
 				}
 				else if (aux->next == NULL)
 				{
-					printf("\n\tNext: NULL");
+					printf("\n\tNext: NULL\n\n");
 				}
 				else
 				{
@@ -275,7 +275,7 @@ void node(node_pointer head)
 			}
 			else if (aux->next == NULL)
 			{
-				printf("\n\tNext: NULL");
+				printf("\n\tNext: NULL\n\n");
 			}
 			else
 			{
