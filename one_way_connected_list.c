@@ -21,10 +21,10 @@ struct node
 node_pointer head;
 
 void insert(node_pointer *head);
-void print(node_pointer head);
-void print2(node_pointer head); // I am using two print functions just for fun
 void delete(node_pointer *head);
 void node(node_pointer head);
+void print(node_pointer head);
+void print2(node_pointer head); // I am using two print functions just for fun
 
 
 
@@ -124,7 +124,7 @@ void insert (node_pointer *head) //warning: you pass a pointer to head as an arg
 		    new_node->next = aux->next;
 	     	aux->next = new_node;
 		
-    		printf("\tData:%d\n\n\n", new_node->data);
+    		printf("\tData:%d\n\n", new_node->data);
 		}
 		
         // the case that the new node should go before head, so it becomes the new head
@@ -133,7 +133,7 @@ void insert (node_pointer *head) //warning: you pass a pointer to head as an arg
 			new_node->next = *head;
     		*head = new_node;
 		
-    		printf("\tData:%d\n\n\n", new_node->data);
+    		printf("\tData:%d\n\n", new_node->data);
 		}
 	}
 
@@ -142,49 +142,11 @@ void insert (node_pointer *head) //warning: you pass a pointer to head as an arg
 	{   
 		*head = new_node;
 		
-		printf("\tData:%d\n\n\n", new_node->data);
+		printf("\tData:%d\n\n", new_node->data);
 	}
 	
 }
 
-
-void print (node_pointer head)
-{
-    node_pointer aux;
-    aux=head;
-
-	if (aux == NULL)
-	{
-		printf("\tThe list is empty\n\n");
-	}
-	else
-	{
-		while (aux != NULL)
-	    {
-		   printf("\t%d\n", aux->data);
-		   aux = aux->next;
-	    }
-	}
-	printf("\n");
-}
-
-
-void print2 (node_pointer head)
-{
-	if (head ==NULL)
-	{
-		printf("\tThe list is empty\n\n");
-	}
-	else
-	{
-		node_pointer aux=head;	
-        printf("\t%d\n", aux->data);
-	    if (aux->next != NULL)
-	    {
-		  print2(aux->next);
-	    }
-	}
-}
 
 
 void delete(node_pointer *head) 
@@ -205,25 +167,40 @@ void delete(node_pointer *head)
 	    scanf("%d", &d);
 	    getchar();
 	    
-	    aux = *head;	    
+	    aux = *head;
+
+		if (d < (*head)->data)
+		{
+			printf("\tNo such node was found. The node you added has data smaller than the head node\n\n");
+		}
 	    
         // the case that the list does not only contain the head
-	    if (d != (*head)->data  &&  d > (*head)->data  &&  (*head) != NULL  &&  (*head)->next!=NULL)
+	    if (d > (*head)->data)
 		{
 		    while (aux->next->data != d  &&  aux->next != NULL)
 			{
 				aux = aux->next;			
 			}
-			
-			node_to_delete = aux->next;
-			aux->next = node_to_delete->next;
-			free(node_to_delete);
+
+			if (aux->next == NULL)
+			{
+				printf("\tNo such node was found. All the nodes were parsed and your input node was not in the list\n\n");
+			}
+			else
+			{
+				node_to_delete = aux->next;
+				aux->next = node_to_delete->next;
+				free(node_to_delete);
+				printf("\n\n");
+			}			
 		}
 		
-		if (d == (*head)->data  &&  (*head) != NULL)
+		// the case that the list only contains the head
+		if (d == (*head)->data)
 	    {	    	    	
 	    	(*head) = aux->next; //or (*head)->next
-	    	free(aux);	    	
+	    	free(aux);
+			printf("\n\n");   	
 		}
 	}
 }
@@ -297,5 +274,46 @@ void node(node_pointer head)
 				printf("\n\n");
 			}			
 		}
+	}
+}
+
+
+
+void print (node_pointer head)
+{
+    node_pointer aux;
+    aux=head;
+
+	if (aux == NULL)
+	{
+		printf("\tThe list is empty\n\n");
+	}
+	else
+	{
+		while (aux != NULL)
+	    {
+		   printf("\t%d\n", aux->data);
+		   aux = aux->next;
+	    }
+	}
+	printf("\n");
+}
+
+
+
+void print2 (node_pointer head)
+{
+	if (head ==NULL)
+	{
+		printf("\tThe list is empty\n\n");
+	}
+	else
+	{
+		node_pointer aux=head;	
+        printf("\t%d\n", aux->data);
+	    if (aux->next != NULL)
+	    {
+		  print2(aux->next);
+	    }
 	}
 }
