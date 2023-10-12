@@ -24,6 +24,7 @@ void insert(node_pointer *head);
 void print(node_pointer head);
 void print2(node_pointer head); // I am using two print functions just for fun
 void delete(node_pointer *head);
+void node(node_pointer head);
 
 
 
@@ -38,7 +39,7 @@ int main (void)
 	while (user_input != 'q')
 	{
 		printf("\nPrevious choice %c\n", user_input);
-		printf("q : quit, i : insert new node, p : prints nodes' data, P : prints nodes' data using recursive code, d: deletes node using its data\n");
+		printf("q : quit, i : insert new node, p : prints nodes' data, P : prints nodes' data using recursive code, d: deletes node using its data, n: shows the connections of the node\n");
 		
 		if (user_input != 'q')
 		{
@@ -74,6 +75,12 @@ int main (void)
 	    	{
 	    		printf("\n\n\tDELETE\n\n");
 			    delete(&head);			    
+	    	}		
+
+			if (user_input == 'n')
+	    	{
+	    		printf("\n\n\tNODE CONNECTIONS\n\n");
+			    node(head);		    
 	    	}		
 		}
 	}
@@ -217,6 +224,78 @@ void delete(node_pointer *head)
 	    {	    	    	
 	    	(*head) = aux->next; //or (*head)->next
 	    	free(aux);	    	
+		}
+	}
+}
+
+
+
+void node(node_pointer head)
+{
+	node_pointer aux;
+	aux = head;
+
+	if (head == NULL)
+	{
+		printf("\tThe list is empty\n\n");
+	}
+	
+	if (head != NULL)
+	{
+		int n;
+		printf("\tData of node: ");
+	    scanf("%d", &n);
+	    getchar();
+
+		if (n < head->data)
+		{
+			printf("\tNo such node was found. The node you added has data smaller than the head node\n\n");
+		}
+
+	    if (n > head->data)
+		{
+		    while (aux->data < n  &&  aux->next != NULL)
+			{
+				aux = aux->next;	
+			}
+
+			if (aux->data == n)
+			{
+				printf("\n\tData: %d", aux->data);
+				if (aux->next != NULL)
+				{
+					printf("\n\tNext: %d\n\n", aux->next->data);
+				}
+				else
+				{
+					printf("\n\n");
+				}		
+			}
+			else
+			{
+				if (aux->data > n)
+				{
+					printf("\tNo such node was found. Search stopped to a node closest to what you asked, but with larger data number\n\n");
+				}
+				if (aux->data < n)
+				{
+					printf("\tNo such node was found. Search stopped to the node with largest data number, but what you asked was even bigger\n\n");
+				}				
+			}			
+		}
+		
+		if (n == head->data)
+	    {	    	    	
+	    	printf("\n\tYou added the head");
+			printf("\n\tData: %d", aux->data);
+			if (aux->next != NULL)
+			{
+				printf("\n\tNext: %d\n\n", aux->next->data);
+			}
+			else
+			{
+				printf("\n\n");
+			}			
 		}
 	}
 }
