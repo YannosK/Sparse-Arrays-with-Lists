@@ -243,10 +243,14 @@ void node(node_pointer head)
 				{
 					printf("\n\tNext: %d\n\n", aux->next->data);
 				}
+				else if (aux->next == NULL)
+				{
+					printf("\n\tNext: NULL");
+				}
 				else
 				{
-					printf("\n\n");
-				}		
+					printf("NEXT IS NOT CONNECTED\n\n");
+				}
 			}
 			else
 			{
@@ -269,10 +273,14 @@ void node(node_pointer head)
 			{
 				printf("\n\tNext: %d\n\n", aux->next->data);
 			}
+			else if (aux->next == NULL)
+			{
+				printf("\n\tNext: NULL");
+			}
 			else
 			{
-				printf("\n\n");
-			}			
+				printf("NEXT IS NOT CONNECTED\n\n");
+			}		
 		}
 	}
 }
