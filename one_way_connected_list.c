@@ -265,7 +265,11 @@ void node(node_pointer head)
 				if (aux->next != NULL)
 				{
 					printf("\n\tNext: %d\n\n", aux->next->data);
-				}			
+				}
+				else
+				{
+					printf("\n\n");
+				}		
 			}
 			else
 			{
@@ -287,7 +291,11 @@ void node(node_pointer head)
 			if (aux->next != NULL)
 			{
 				printf("\n\tNext: %d\n\n", aux->next->data);
-			}	
+			}
+			else
+			{
+				printf("\n\n");
+			}			
 		}
 	}
 }
