@@ -80,7 +80,7 @@ int main (void)
 			if (user_input == 'n')
 	    	{
 	    		printf("\n\n\tNODE CONNECTIONS\n\n");
-			    node(&head);		    
+			    node(head);		    
 	    	}		
 		}
 	}
@@ -230,10 +230,10 @@ void delete(node_pointer *head)
 
 
 
-void node(node_pointer *head)
+void node(node_pointer head)
 {
 	node_pointer aux;
-	aux = *head;
+	aux = head;
 
 	if (head == NULL)
 	{
@@ -247,12 +247,12 @@ void node(node_pointer *head)
 	    scanf("%d", &n);
 	    getchar();
 
-		if (n < (*head)->data)
+		if (n < head->data)
 		{
 			printf("\tNo such node was found. The node you added has data smaller than the head node\n\n");
 		}
 
-	    if (n > (*head)->data)
+	    if (n > head->data)
 		{
 		    while (aux->data < n  &&  aux->next != NULL)
 			{
@@ -276,7 +276,7 @@ void node(node_pointer *head)
 			}			
 		}
 		
-		if (n == (*head)->data)
+		if (n == head->data)
 	    {	    	    	
 	    	printf("\n\tYou added the head\n\tData: %d\n\tNext: %d", aux->data, aux->next->data);  	
 		}
