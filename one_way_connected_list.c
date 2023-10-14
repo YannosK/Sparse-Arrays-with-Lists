@@ -1,9 +1,6 @@
 /*
-ONE WAY CONNECTED LIST
-
-a list of nodes that each one has an integer inside
-this integer dictates the position of the node
-the list is of ascending order with the head containing the smallest integer
+This one has two print functions for no particular reason
+I will get rid of one of them in main branch
 */
 #include <stdio.h>
 #include <stdlib.h>
