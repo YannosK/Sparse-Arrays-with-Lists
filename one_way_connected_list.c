@@ -186,12 +186,7 @@ int delete(node_pointer *head)
 					printf("\tNo such node was found. All the nodes were parsed and your input node was not in the list\n\n");
 					return 0;
 				}
-			}
-
-			if (aux->next->data != d  &&  aux->next != NULL)
-			{
-				printf("\tNo such node was found. You added a value that is in between the list's nodes\n\n");		
-			}
+			}			
 			
 			if (aux->next->data == d)
 			{
@@ -199,6 +194,10 @@ int delete(node_pointer *head)
 				aux->next = node_to_delete->next;
 				free(node_to_delete);
 				printf("\n\n");
+			}
+			else
+			{
+				printf("\tNo such node was found. You added a value that is in between the list's nodes\n\n");		
 			}
 		}
 		
