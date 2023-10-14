@@ -179,7 +179,8 @@ void delete(node_pointer *head)
 		{
 		    while (aux->next->data < d  &&  aux->next != NULL)
 			{
-				aux = aux->next;	
+				printf("\naux: %d\naux->next: %d", aux->data, aux->next->data);
+				aux = aux->next;
 			}
 
 			if (aux->next->data == d)
