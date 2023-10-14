@@ -179,11 +179,29 @@ void delete(node_pointer *head)
 		{
 		    while (aux->next->data < d  &&  aux->next != NULL)
 			{
-				printf("\naux: %d\naux->next: %d", aux->data, aux->next->data);
+				printf("\nBefore inc\naux: %d\naux->next: %d", aux->data, aux->next->data);
 				aux = aux->next;
+				printf("\nAfter inc\naux: %d", aux->data);
+				if (aux->next == NULL)
+				{
+					printf("\naux->next == NULL");
+				}
+				else
+				{
+					printf("\naux->next: %d", aux->next->data);
+				}
+			}
+			printf("\n\nOutside while\naux: %d", aux->data);
+			if (aux->next == NULL)
+			{
+				printf("\naux->next == NULL");
+			}
+			else
+			{
+				printf("\naux->next =! NULL");
 			}
 
-			if (aux->next->data == d)
+			/*if (aux->next->data == d)
 			{
 				node_to_delete = aux->next;
 				aux->next = node_to_delete->next;
@@ -200,7 +218,7 @@ void delete(node_pointer *head)
 				{
 					printf("\tWARNING: Something is wrong with the list connection\n\n");
 				}
-			}			
+			}*/		
 		}
 		
 		// the case that the list only contains the head
