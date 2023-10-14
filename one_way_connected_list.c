@@ -24,7 +24,6 @@ void insert(node_pointer *head);
 int delete(node_pointer *head);
 void node(node_pointer head);
 void print(node_pointer head);
-void print2(node_pointer head); // I am using two print functions just for fun
 
 
 
@@ -39,7 +38,7 @@ int main (void)
 	while (user_input != 'q')
 	{
 		printf("\nPrevious choice %c\n", user_input);
-		printf("q : quit, i : insert new node, p : prints nodes' data, P : prints nodes' data using recursive code, d: deletes node using its data, n: shows the connections of the node\n");
+		printf("q : quit, i : insert new node, p : prints nodes' data, d: deletes node using its data, n: shows the connections of the node\n");
 		
 		if (user_input != 'q')
 		{
@@ -63,12 +62,6 @@ int main (void)
 	    	{
 	    		printf("\n\n\tPRINT\n\n");
 			    print(head);			    
-	    	}
-	    	
-	    	if (user_input == 'P')
-	    	{
-	    		printf("\n\n\tPRINT 2\n\n");
-			    print2(head);			    
 	    	}
 	    	
 	    	if (user_input == 'd')
@@ -311,23 +304,4 @@ void print (node_pointer head)
 	    }
 	}
 	printf("\n");
-}
-
-
-
-void print2 (node_pointer head)
-{
-	if (head ==NULL)
-	{
-		printf("\tThe list is empty\n\n");
-	}
-	else
-	{
-		node_pointer aux=head;	
-        printf("\t%d\n", aux->data);
-	    if (aux->next != NULL)
-	    {
-		  print2(aux->next);
-	    }
-	}
 }
