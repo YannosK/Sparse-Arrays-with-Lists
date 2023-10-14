@@ -21,7 +21,7 @@ struct node
 node_pointer head;
 
 void insert(node_pointer *head);
-void delete(node_pointer *head);
+int delete(node_pointer *head);
 void node(node_pointer head);
 void print(node_pointer head);
 void print2(node_pointer head); // I am using two print functions just for fun
@@ -149,7 +149,7 @@ void insert (node_pointer *head) //warning: you pass a pointer to head as an arg
 
 
 
-void delete(node_pointer *head) 
+int delete(node_pointer *head) 
 {
 	node_pointer node_to_delete, aux;
 		
@@ -179,39 +179,18 @@ void delete(node_pointer *head)
 		{
 		    while (aux->next->data < d  &&  aux->next != NULL)
 			{
-				printf("\nBefore inc\naux: %d\naux->next: %d", aux->data, aux->next->data);
 				aux = aux->next;
-				printf("\nAfter inc\naux: %d", aux->data);
-				if (aux->next == NULL)
-				{
-					printf("\naux->next == NULL");
-				}
-				else
-				{
-					printf("\naux->next: %d", aux->next->data);
-				}
 
 				if (aux->next==NULL)
-				{break;}
-			}
-			printf("\n\nOutside while\naux: %d", aux->data);
-			if (aux->next == NULL)
-			{
-				printf("\naux->next == NULL");
-			}
-			else
-			{
-				printf("\naux->next =! NULL");
+				{
+					printf("\tNo such node was found. All the nodes were parsed and your input node was not in the list\n\n");
+					return 0;
+				}
 			}
 
 			if (aux->next->data != d  &&  aux->next != NULL)
 			{
 				printf("\tNo such node was found. You added a value that is in between the list's nodes\n\n");		
-			}
-
-			if (aux->next == NULL)
-			{
-				printf("\tNo such node was found. All the nodes were parsed and your input node was not in the list\n\n");
 			}
 			
 			if (aux->next->data == d)
