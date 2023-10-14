@@ -1,6 +1,8 @@
 /*
 This one has two print functions for no particular reason
 I will get rid of one of them in main branch
+
+USE ONLY TO GET SECOND PRINT - REST OF CODE IS OUT OF DATE
 */
 #include <stdio.h>
 #include <stdlib.h>
