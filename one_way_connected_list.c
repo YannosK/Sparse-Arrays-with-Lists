@@ -182,16 +182,23 @@ void delete(node_pointer *head)
 				aux = aux->next;	
 			}
 
-			if (aux->next == NULL)
-			{
-				printf("\tNo such node was found. All the nodes were parsed and your input node was not in the list\n\n");
-			}
-			else
+			if (aux->next == d)
 			{
 				node_to_delete = aux->next;
 				aux->next = node_to_delete->next;
 				free(node_to_delete);
 				printf("\n\n");
+			}
+			else
+			{
+				if (aux->next == NULL)
+				{
+					printf("\tNo such node was found. All the nodes were parsed and your input node was not in the list\n\n");
+				}
+				else
+				{
+					printf("\tWARNING: Something is wrong with the list connection\n\n");
+				}
 			}			
 		}
 		
