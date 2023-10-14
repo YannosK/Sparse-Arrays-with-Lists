@@ -197,15 +197,17 @@ int delete(node_pointer *head)
 				node_to_delete = aux->next;
 				if (node_to_delete->next != NULL)
 				{
-					aux2 = node_to_delete->next; //not sure if proper way. But aux2 must be two nodes ahead of aux
+					aux2 = node_to_delete->next;
 					aux->next = aux2;
 					aux2->back = aux;
 					free(node_to_delete);
+					printf("\n"); 
 				}
 				else
 				{
 					aux->next = node_to_delete->next;
 					free(node_to_delete);
+					printf("\n"); 
 				}
 			}
 			else
@@ -220,15 +222,13 @@ int delete(node_pointer *head)
 	    	(*head) = aux->next;
 			(*head)->back = NULL;
 	    	free(aux);
-			printf("\n\n");   	
+			printf("\n");   	
 		}
 		else if (d == (*head)->data  &&  (*head)->next == NULL)
 		{			
 			(*head) = NULL;
-			(*head)->next = NULL;
-			(*head)->back = NULL;
-			return 0;
-			free(aux);		
+	    	free(aux);
+			printf("\n");
 		}
 	}
 }
@@ -350,7 +350,7 @@ void print (node_pointer head)
 
 	if (aux == NULL)
 	{
-		printf("\tThe list is empty\n\n");
+		printf("\tThe list is empty\n");
 	}
 	else
 	{
