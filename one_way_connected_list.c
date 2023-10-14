@@ -167,9 +167,16 @@ int delete(node_pointer *head)
 			printf("\tNo such node was found. The node you added has data smaller than the head node\n\n");
 		}
 	    
-        // the case that the list does not only contain the head
+        // deleting something after the head
 	    if (d > (*head)->data)
 		{
+			// this catches the case that there is only the head and someone inputs something larger than it
+			if (aux->next==NULL)
+			{
+				printf("\tNo such node was found. All the nodes were parsed and your input node was not in the list\n\n");
+				return 0;
+			}
+
 		    while (aux->next->data < d  &&  aux->next != NULL)
 			{
 				aux = aux->next;
@@ -194,7 +201,7 @@ int delete(node_pointer *head)
 			}
 		}
 		
-		// the case that the list only contains the head
+		// deleting the head
 		if (d == (*head)->data)
 	    {	    	    	
 	    	(*head) = aux->next; //or (*head)->next
