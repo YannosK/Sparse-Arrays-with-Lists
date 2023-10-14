@@ -182,7 +182,7 @@ void delete(node_pointer *head)
 				aux = aux->next;	
 			}
 
-			if (aux->next == d)
+			if (aux->next->data == d)
 			{
 				node_to_delete = aux->next;
 				aux->next = node_to_delete->next;
