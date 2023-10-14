@@ -190,6 +190,9 @@ void delete(node_pointer *head)
 				{
 					printf("\naux->next: %d", aux->next->data);
 				}
+
+				if (aux->next==NULL)
+				{break;}
 			}
 			printf("\n\nOutside while\naux: %d", aux->data);
 			if (aux->next == NULL)
@@ -201,24 +204,23 @@ void delete(node_pointer *head)
 				printf("\naux->next =! NULL");
 			}
 
-			/*if (aux->next->data == d)
+			if (aux->next->data != d  &&  aux->next != NULL)
+			{
+				printf("\tNo such node was found. You added a value that is in between the list's nodes\n\n");		
+			}
+
+			if (aux->next == NULL)
+			{
+				printf("\tNo such node was found. All the nodes were parsed and your input node was not in the list\n\n");
+			}
+			
+			if (aux->next->data == d)
 			{
 				node_to_delete = aux->next;
 				aux->next = node_to_delete->next;
 				free(node_to_delete);
 				printf("\n\n");
 			}
-			else
-			{
-				if (aux->next == NULL)
-				{
-					printf("\tNo such node was found. All the nodes were parsed and your input node was not in the list\n\n");
-				}
-				else
-				{
-					printf("\tWARNING: Something is wrong with the list connection\n\n");
-				}
-			}*/		
 		}
 		
 		// the case that the list only contains the head
