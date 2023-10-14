@@ -177,9 +177,9 @@ void delete(node_pointer *head)
         // the case that the list does not only contain the head
 	    if (d > (*head)->data)
 		{
-		    while (aux->next->data != d  &&  aux->next != NULL)
+		    while (aux->next->data < d  &&  aux->next != NULL)
 			{
-				aux = aux->next;			
+				aux = aux->next;	
 			}
 
 			if (aux->next == NULL)
