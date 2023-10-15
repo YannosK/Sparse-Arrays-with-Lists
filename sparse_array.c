@@ -1,11 +1,11 @@
 /*
 SPARSE ARRAY
+
+A 30x30 sparse array
 */
 #include <stdio.h>
 #include <stdlib.h>
 
-// defining a struct called node & using typedef to create a node_pointer data type
-// node_pointer is a pointer to a structure of type struct node
 typedef struct node *node_pointer;
 struct node 
 {
@@ -14,7 +14,6 @@ struct node
     node_pointer back;
 };
 
-// head is the first list member
 node_pointer head;
 
 void insert(node_pointer *head);
