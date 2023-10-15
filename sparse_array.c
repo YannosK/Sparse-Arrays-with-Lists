@@ -18,7 +18,7 @@ node_pointer row_head[30];
 
 //node_pointer head;
 
-void insert(node_pointer *row_head[]);
+void insert(node_pointer row_head[]);
 //int delete(node_pointer *head);
 //void node(node_pointer head);
 //void print(node_pointer head);
@@ -56,7 +56,7 @@ int main (void)
 	        if (user_input == 'i')
 	        {
 		    	printf("\n\n\tINSERT\n\n");
-		    	insert(&row_head);
+		    	insert(row_head);
 		    }
 /*				   	
 		    if (user_input == 'p')
@@ -84,7 +84,7 @@ int main (void)
 
 
 
-void insert (node_pointer *row_head[]) //warning: you pass a pointer to head as an argument because otherwise head won't change globally
+void insert (node_pointer row_head[]) //warning: you pass a pointer to head as an argument because otherwise head won't change globally
 {
 	node_pointer new_node, aux; 
 	int row_data, column_data;
@@ -101,7 +101,7 @@ void insert (node_pointer *row_head[]) //warning: you pass a pointer to head as 
 	int i = row_data - 1;
 
 	node_pointer head;
-	head == *row_head[i];
+	head == row_head[i];
 	
 	new_node->column = column_data; //I AM HERE
 	new_node->next = NULL;
