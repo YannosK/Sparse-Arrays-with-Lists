@@ -18,7 +18,7 @@ node_pointer row_head[30];
 
 //node_pointer head;
 
-void insert(node_pointer row_head[]);
+void insert(node_pointer *row_head);
 //int delete(node_pointer *head);
 //void node(node_pointer head);
 //void print(node_pointer head);
@@ -84,7 +84,7 @@ int main (void)
 
 
 
-void insert (node_pointer row_head[]) //warning: you pass a pointer to head as an argument because otherwise head won't change globally
+void insert (node_pointer *row_head) //warning: you pass a pointer to head as an argument because otherwise head won't change globally
 {
 	node_pointer new_node, aux; 
 	int row_data, column_data;
@@ -99,21 +99,18 @@ void insert (node_pointer row_head[]) //warning: you pass a pointer to head as a
 	getchar();
 
 	int i = row_data - 1;
-
-	node_pointer head;
-	head == row_head[i];
 	
 	new_node->column = column_data; //I AM HERE
 	new_node->next = NULL;
 	new_node->back = NULL;
 	
 	// the case that the list is not empty
-	if (head != NULL)
+	if (row_head[i] != NULL)
 	{
         // the case that the new node should go after head, so we traverse the list to find the proper spot
-		if (new_node->column > head->column)
+		if (new_node->column > row_head[i]->column)
 		{
-			aux = head;
+			aux = row_head[i];
 			
             while((aux->next != NULL) && (aux->next->column < new_node->column)) //When we insert a tail I wonder how the code doesn't break by checking aux->next->data
 		    {
@@ -144,28 +141,28 @@ void insert (node_pointer row_head[]) //warning: you pass a pointer to head as a
 		}
 		
         // the case that the new node should go before head, so it becomes the new head
-		if(new_node->column < head->column)
+		if(new_node->column < row_head[i]->column)
 		{
-			new_node->next = head;
-			head->back = new_node;
-    		head = new_node;
+			new_node->next = row_head[i];
+			row_head[i]->back = new_node;
+    		row_head[i] = new_node;
     		printf("\tData:%d\n\n", new_node->column);
 		}
 	}
 
 	//the case that head is trying to be reinserted
-	if (head != NULL)
+	if (row_head[i] != NULL)
 	{
-		if (new_node->column == head->column)
+		if (new_node->column == row_head[i]->column)
 		{
 			printf("\tInsertion not allowed. Node already exists\n\n");
 		}
 	}
 
     // the case that the list is empty			
-	if (head == NULL)
+	if (row_head[i] == NULL)
 	{   
-		head = new_node;
+		row_head[i] = new_node;
 		
 		printf("\tData:%d\n\n", new_node->column);
 	}
