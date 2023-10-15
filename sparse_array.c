@@ -16,9 +16,9 @@ struct node
 
 node_pointer row_head[30];
 
-node_pointer head;
+//node_pointer head;
 
-void insert(node_pointer *head);
+void insert(node_pointer *row_head[]);
 //int delete(node_pointer *head);
 //void node(node_pointer head);
 //void print(node_pointer head);
@@ -53,7 +53,7 @@ int main (void)
 	        if (user_input == 'i')
 	        {
 		    	printf("\n\n\tINSERT\n\n");
-		    	insert(&head);		    	
+		    	insert(&row_head[]);	    	
 		    }
 /*				   	
 		    if (user_input == 'p')
@@ -81,18 +81,21 @@ int main (void)
 
 
 
-void insert (node_pointer *head) //warning: you pass a pointer to head as an argument because otherwise head won't change globally
+void insert (node_pointer *row_head[]) //warning: you pass a pointer to head as an argument because otherwise head won't change globally
 {
 	node_pointer new_node, aux; 
-	int new_node_data;
+	int row_data, column_data;
 	
     new_node = (node_pointer)malloc(sizeof(struct node)); 
 	
-	printf("\tInsert node data: ");
-	scanf("%d", &new_node_data);	
-	getchar(); 
+	printf("\tInsert node data\n\tRow: ");
+	scanf("%d", &row_data);
+	getchar();
+	printf("\tColumn: ");
+	scanf("%d", &column_data);
+	getchar();
 	
-	new_node->column = new_node_data;
+	new_node->column = column_data; //I AM HERE
 	new_node->next = NULL;
 	new_node->back = NULL;
 	
