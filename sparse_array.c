@@ -21,7 +21,7 @@ node_pointer row_head[30];
 void insert(node_pointer *row_head);
 //int delete(node_pointer *head);
 //void node(node_pointer head);
-//void print(node_pointer head);
+void print(node_pointer row_head);
 
 
 
@@ -58,13 +58,13 @@ int main (void)
 		    	printf("\n\n\tINSERT\n\n");
 		    	insert(row_head);
 		    }
-/*				   	
+				   	
 		    if (user_input == 'p')
 	    	{
 	    		printf("\n\n\tPRINT\n\n");
-			    print(head);			    
+			    print(row_head);			    
 	    	}
-	    	
+/*	    	
 	    	if (user_input == 'd')
 	    	{
 	    		printf("\n\n\tDELETE\n\n");
@@ -363,14 +363,22 @@ void node(node_pointer head)
 			}	
 		}
 	}
-}
+}*/
 
 
 
-void print (node_pointer head)
+void print (node_pointer row_head)
 {
     node_pointer aux;
-    aux=head;
+	int row_data, i;
+
+	printf("\tInsert the row whose elements you want printed: ");
+	scanf("%d", &row_data);
+	getchar();
+
+	i = row_data -1;
+
+    aux=row_head[i]; //WHAT IS THE PROBLEMM
 
 	if (aux == NULL)
 	{
@@ -386,4 +394,3 @@ void print (node_pointer head)
 	}
 	printf("\n");
 }
-*/
