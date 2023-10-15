@@ -84,7 +84,6 @@ int main (void)
 
 
 
-// inserts new node
 void insert (node_pointer *head) //warning: you pass a pointer to head as an argument because otherwise head won't change globally
 {
 	node_pointer new_node, aux; 
@@ -111,16 +110,32 @@ void insert (node_pointer *head) //warning: you pass a pointer to head as an arg
 			aux = *head;
 			
             // traversing the list until temp->data is smaller than the next node's data
-		    while((aux->next != NULL) && (aux->next->data < new_node->data))
+		    while((aux->next != NULL) && (aux->next->data < new_node->data)) //When we insert a tail I wonder how the code doesn't break by checking aux->next->data
 		    {
 		   	    aux = aux->next;
 		    }
-		
-		    new_node->next = aux->next;
-            new_node->back = aux;
-	     	aux->next = new_node;
-		
-    		printf("\tData:%d\n\n", new_node->data);
+
+			if (aux->next != NULL) //in between insertion
+			{
+				if (aux->next->data == new_node->data)
+				{
+					printf("\tInsertion not allowed. Node already exists\n\n");					
+				}
+				else
+				{
+					new_node->next = aux->next;
+        			new_node->back = aux;
+	     			aux->next = new_node;
+    				printf("\tData:%d\n\n", new_node->data);				
+				}		
+			}
+			else // tail insertion
+			{
+				new_node->next = aux->next; //could also be new_node->next = NULL;
+        		new_node->back = aux;
+	     		aux->next = new_node;
+    			printf("\tData:%d\n\n", new_node->data);
+			}
 		}
 		
         // the case that the new node should go before head, so it becomes the new head
@@ -128,9 +143,17 @@ void insert (node_pointer *head) //warning: you pass a pointer to head as an arg
 		{
 			new_node->next = *head;
 			(*head)->back = new_node;
-    		*head = new_node;
-		
+    		*head = new_node;		
     		printf("\tData:%d\n\n", new_node->data);
+		}
+	}
+
+	//the case that head is trying to be reinserted
+	if ((*head) != NULL)
+	{
+		if (new_node->data == (*head)->data)
+		{
+			printf("\tInsertion not allowed. Node already exists\n\n");
 		}
 	}
 
@@ -141,7 +164,6 @@ void insert (node_pointer *head) //warning: you pass a pointer to head as an arg
 		
 		printf("\tData:%d\n\n", new_node->data);
 	}
-	
 }
 
 
