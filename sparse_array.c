@@ -1,7 +1,6 @@
 /*
-SPARSE ARRAY
-
-A 30x30 sparse array
+Creating just the array of the rows
+From this array lists will spawn based on column numbers
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,7 +8,8 @@ A 30x30 sparse array
 typedef struct node *node_pointer;
 struct node 
 {
-    int data;
+    int row;
+	int data; //this will become row later on
     node_pointer next;
     node_pointer back;
 };
@@ -84,9 +84,7 @@ void insert (node_pointer *head) //warning: you pass a pointer to head as an arg
 	node_pointer new_node, aux; 
 	int new_node_data;
 	
-    // using malloc to allocate memory of 'struct node' size and returning the pointer value to new_node
-    // new_node will be used to create our new node
-	new_node = (node_pointer)malloc(sizeof(struct node)); 
+    new_node = (node_pointer)malloc(sizeof(struct node)); 
 	
 	printf("\tInsert node data: ");
 	scanf("%d", &new_node_data);	
