@@ -9,17 +9,19 @@ typedef struct node *node_pointer;
 struct node 
 {
     int row;
-	int data; //this will become row later on
+	int column; //this will become row later on
     node_pointer next;
     node_pointer back;
 };
 
+node_pointer row_head[30];
+
 node_pointer head;
 
 void insert(node_pointer *head);
-int delete(node_pointer *head);
-void node(node_pointer head);
-void print(node_pointer head);
+//int delete(node_pointer *head);
+//void node(node_pointer head);
+//void print(node_pointer head);
 
 
 
@@ -53,7 +55,7 @@ int main (void)
 		    	printf("\n\n\tINSERT\n\n");
 		    	insert(&head);		    	
 		    }
-				   	
+/*				   	
 		    if (user_input == 'p')
 	    	{
 	    		printf("\n\n\tPRINT\n\n");
@@ -71,7 +73,7 @@ int main (void)
 	    		printf("\n\n\tNODE CONNECTIONS\n\n");
 			    node(head);		    
 	    	}		
-		}
+*/		}
 	}
 	
 	return 0;
@@ -90,7 +92,7 @@ void insert (node_pointer *head) //warning: you pass a pointer to head as an arg
 	scanf("%d", &new_node_data);	
 	getchar(); 
 	
-	new_node->data = new_node_data;
+	new_node->column = new_node_data;
 	new_node->next = NULL;
 	new_node->back = NULL;
 	
@@ -98,19 +100,18 @@ void insert (node_pointer *head) //warning: you pass a pointer to head as an arg
 	if ((*head) != NULL)
 	{
         // the case that the new node should go after head, so we traverse the list to find the proper spot
-		if (new_node->data > (*head)->data)
+		if (new_node->column > (*head)->column)
 		{
 			aux = *head;
 			
-            // traversing the list until temp->data is smaller than the next node's data
-		    while((aux->next != NULL) && (aux->next->data < new_node->data)) //When we insert a tail I wonder how the code doesn't break by checking aux->next->data
+            while((aux->next != NULL) && (aux->next->column < new_node->column)) //When we insert a tail I wonder how the code doesn't break by checking aux->next->data
 		    {
 		   	    aux = aux->next;
 		    }
 
 			if (aux->next != NULL) //in between insertion
 			{
-				if (aux->next->data == new_node->data)
+				if (aux->next->column == new_node->column)
 				{
 					printf("\tInsertion not allowed. Node already exists\n\n");					
 				}
@@ -119,7 +120,7 @@ void insert (node_pointer *head) //warning: you pass a pointer to head as an arg
 					new_node->next = aux->next;
         			new_node->back = aux;
 	     			aux->next = new_node;
-    				printf("\tData:%d\n\n", new_node->data);				
+    				printf("\tData:%d\n\n", new_node->column);				
 				}		
 			}
 			else // tail insertion
@@ -127,24 +128,24 @@ void insert (node_pointer *head) //warning: you pass a pointer to head as an arg
 				new_node->next = aux->next; //could also be new_node->next = NULL;
         		new_node->back = aux;
 	     		aux->next = new_node;
-    			printf("\tData:%d\n\n", new_node->data);
+    			printf("\tData:%d\n\n", new_node->column);
 			}
 		}
 		
         // the case that the new node should go before head, so it becomes the new head
-		if(new_node->data < (*head)->data)
+		if(new_node->column < (*head)->column)
 		{
 			new_node->next = *head;
 			(*head)->back = new_node;
-    		*head = new_node;		
-    		printf("\tData:%d\n\n", new_node->data);
+    		*head = new_node;
+    		printf("\tData:%d\n\n", new_node->column);
 		}
 	}
 
 	//the case that head is trying to be reinserted
 	if ((*head) != NULL)
 	{
-		if (new_node->data == (*head)->data)
+		if (new_node->column == (*head)->column)
 		{
 			printf("\tInsertion not allowed. Node already exists\n\n");
 		}
@@ -155,12 +156,12 @@ void insert (node_pointer *head) //warning: you pass a pointer to head as an arg
 	{   
 		*head = new_node;
 		
-		printf("\tData:%d\n\n", new_node->data);
+		printf("\tData:%d\n\n", new_node->column);
 	}
 }
 
 
-
+/*
 int delete(node_pointer *head) 
 {
 	node_pointer node_to_delete, aux, aux2;
@@ -377,3 +378,4 @@ void print (node_pointer head)
 	}
 	printf("\n");
 }
+*/
