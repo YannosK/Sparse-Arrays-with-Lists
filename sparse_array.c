@@ -19,7 +19,7 @@ node_pointer row_head[30];
 //node_pointer head;
 
 void insert(node_pointer *row_head);
-//int delete(node_pointer *head);
+int delete(node_pointer *row_head);
 //void node(node_pointer head);
 void print(node_pointer row_head[]);
 
@@ -64,13 +64,13 @@ int main (void)
 	    		printf("\n\n\tPRINT\n\n");
 			    print(row_head);			    
 	    	}
-/*	    	
+	    	
 	    	if (user_input == 'd')
 	    	{
 	    		printf("\n\n\tDELETE\n\n");
-			    delete(&head);			    
+			    delete(row_head);			    
 	    	}		
-
+/*
 			if (user_input == 'n')
 	    	{
 	    		printf("\n\n\tNODE CONNECTIONS\n\n");
@@ -166,34 +166,44 @@ void insert (node_pointer *row_head) //warning: you pass a pointer to head as an
 }
 
 
-/*
-int delete(node_pointer *head) 
+
+int delete(node_pointer *row_head) 
 {
 	node_pointer node_to_delete, aux, aux2;
+	int row_data, column_data;
 		
 	node_to_delete = (node_pointer)malloc(sizeof(struct node));
-		
-	if ((*head) == NULL)
+
+	printf("\tInsert the data of the node you wish to delete\n\tRow: ");
+	scanf("%d", &row_data);
+	getchar();
+	int i = row_data - 1;
+	if (row_head[i] == NULL)
 	{
 		printf("\tThe list is empty\n\n");
 	}
-	
-	if ((*head) != NULL)
-	{
-		int d;
-		printf("\tData of node to delete: ");
-	    scanf("%d", &d);
-	    getchar();
-	    
-	    aux = *head;
+	/*
+	The way this delete works I have chosen not to check all the array elements to see if they ar NULL
+	I think this would slow the algorithm
+	Instead I chose that the user would input the array element and node first and the algorithm would check if there is something there
+	*/
+	printf("\tColumn: ");
+	scanf("%d", &column_data);
+	getchar();
 
-		if (d < (*head)->data)
+	
+	
+	if (row_head[i] != NULL)
+	{
+		aux = row_head[i];
+
+		if (column_data < row_head[i]->column)
 		{
 			printf("\tNo such node was found. The node you added has data smaller than the head node\n\n");
 		}
 	    
         // deleting something after the head
-	    if (d > (*head)->data)
+	    if (column_data > row_head[i]->column)
 		{
 			// this catches the case that there is only the head and someone inputs something larger than it
 			if (aux->next==NULL)
@@ -202,7 +212,7 @@ int delete(node_pointer *head)
 				return 0;
 			}
 
-		    while (aux->next->data < d  &&  aux->next != NULL)
+		    while (aux->next->column < column_data  &&  aux->next != NULL)
 			{
 				aux = aux->next;
 
@@ -213,7 +223,7 @@ int delete(node_pointer *head)
 				}
 			}			
 			
-			if (aux->next->data == d)
+			if (aux->next->column == column_data)
 			{
 				node_to_delete = aux->next;
 				if (node_to_delete->next != NULL)
@@ -238,16 +248,16 @@ int delete(node_pointer *head)
 		}
 		
 		// deleting the head
-		if (d == (*head)->data  &&  (*head)->next != NULL)
+		if (column_data == row_head[i]->column  &&  row_head[i]->next != NULL)
 	    {
-	    	(*head) = aux->next;
-			(*head)->back = NULL;
+	    	row_head[i] = aux->next;
+			row_head[i]->back = NULL;
 	    	free(aux);
 			printf("\n");   	
 		}
-		else if (d == (*head)->data  &&  (*head)->next == NULL)
+		else if (column_data == row_head[i]->column  &&  row_head[i]->next == NULL)
 		{			
-			(*head) = NULL;
+			row_head[i] = NULL;
 	    	free(aux);
 			printf("\n");
 		}
@@ -255,7 +265,7 @@ int delete(node_pointer *head)
 }
 
 
-
+/*
 void node(node_pointer head)
 {
 	node_pointer aux;
