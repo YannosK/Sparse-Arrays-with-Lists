@@ -21,7 +21,7 @@ node_pointer row_head[30];
 void insert(node_pointer *row_head);
 //int delete(node_pointer *head);
 //void node(node_pointer head);
-void print(node_pointer row_head);
+void print(node_pointer row_head[]);
 
 
 
@@ -129,7 +129,7 @@ void insert (node_pointer *row_head) //warning: you pass a pointer to head as an
         			new_node->back = aux;
 	     			aux->next = new_node;
     				printf("\tData:%d\n\n", new_node->column);				
-				}	
+				}
 			}
 			else // tail insertion
 			{
@@ -148,11 +148,8 @@ void insert (node_pointer *row_head) //warning: you pass a pointer to head as an
     		row_head[i] = new_node;
     		printf("\tData:%d\n\n", new_node->column);
 		}
-	}
 
-	//the case that head is trying to be reinserted
-	if (row_head[i] != NULL)
-	{
+		//the case that head is trying to be reinserted
 		if (new_node->column == row_head[i]->column)
 		{
 			printf("\tInsertion not allowed. Node already exists\n\n");
@@ -367,7 +364,7 @@ void node(node_pointer head)
 
 
 
-void print (node_pointer row_head)
+void print (node_pointer row_head[]) //I DO NOT UNDERSTAND
 {
     node_pointer aux;
 	int row_data, i;
@@ -378,7 +375,7 @@ void print (node_pointer row_head)
 
 	i = row_data -1;
 
-    aux=row_head[i]; //WHAT IS THE PROBLEMM
+    aux=row_head[i];
 
 	if (aux == NULL)
 	{
@@ -388,7 +385,7 @@ void print (node_pointer row_head)
 	{
 		while (aux != NULL)
 	    {
-		   printf("\t%d\n", aux->data);
+		   printf("\t%d\n", aux->column);
 		   aux = aux->next;
 	    }
 	}
