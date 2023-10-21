@@ -14,13 +14,11 @@ struct node
     node_pointer back;
 };
 
-node_pointer row_head[30];
-
 //node_pointer head;
 
 void insert(node_pointer *row_head);
 int delete(node_pointer *row_head);
-//void node(node_pointer head);
+void node(node_pointer row_head[]);
 void print(node_pointer row_head[]);
 
 
@@ -29,6 +27,8 @@ int main (void)
 {
 	char user_input;
 	user_input = 'a';
+
+	node_pointer row_head[30];
 	
     // in the beginning there is no list so the head is empty
 	for(int i=0; i<30; i++)
@@ -69,14 +69,14 @@ int main (void)
 	    	{
 	    		printf("\n\n\tDELETE\n\n");
 			    delete(row_head);			    
-	    	}		
-/*
+	    	}
+
 			if (user_input == 'n')
 	    	{
 	    		printf("\n\n\tNODE CONNECTIONS\n\n");
-			    node(head);		    
-	    	}		
-*/		}
+			    node(row_head);   
+	    	}
+		}
 	}
 	
 	return 0;
@@ -100,7 +100,7 @@ void insert (node_pointer *row_head) //warning: you pass a pointer to head as an
 
 	int i = row_data - 1;
 	
-	new_node->column = column_data; //I AM HERE
+	new_node->column = column_data;
 	new_node->next = NULL;
 	new_node->back = NULL;
 	
@@ -171,8 +171,6 @@ int delete(node_pointer *row_head)
 {
 	node_pointer node_to_delete, aux, aux2;
 	int row_data, column_data;
-		
-	node_to_delete = (node_pointer)malloc(sizeof(struct node));
 
 	printf("\tInsert the data of the node you wish to delete\n\tRow: ");
 	scanf("%d", &row_data);
@@ -190,8 +188,6 @@ int delete(node_pointer *row_head)
 	printf("\tColumn: ");
 	scanf("%d", &column_data);
 	getchar();
-
-	
 	
 	if (row_head[i] != NULL)
 	{
@@ -265,43 +261,49 @@ int delete(node_pointer *row_head)
 }
 
 
-/*
-void node(node_pointer head)
+
+void node(node_pointer row_head[])
 {
 	node_pointer aux;
-	aux = head;
+	int row_data, column_data;
+	/*
+	Similarly with delete I chose that the user would input the array element and node first and the algorithm would check if there is something there
+	*/
+	printf("\tInsert the data of the node you wish to see its connections\n\tRow: ");
+	scanf("%d", &row_data);
+	getchar();
+	int i = row_data - 1;	
+	aux = row_head[i];
 
-	if (head == NULL)
+	if (row_head[i] == NULL)
 	{
 		printf("\tThe list is empty\n\n");
 	}
-	
-	if (head != NULL)
+	else
 	{
-		int n;
-		printf("\tData of node: ");
-	    scanf("%d", &n);
-	    getchar();
+		printf("\tColumn: ");
+		scanf("%d", &column_data);
+		getchar();
 
-		if (n < head->data)
+		if (column_data < row_head[i]->column)
 		{
 			printf("\tNo such node was found. The node you added has data smaller than the head node\n\n");
 		}
 
-	    if (n > head->data)
+	    if (column_data > row_head[i]->column)
 		{
-		    while (aux->data < n  &&  aux->next != NULL)
+		    while (aux->column < column_data  &&  aux->next != NULL)
 			{
 				aux = aux->next;	
 			}
 
-			if (aux->data == n)
+			if (aux->column == column_data)
 			{
-				printf("\n\tData: %d", aux->data);
+				printf("\n\tData: %d", aux->column);
 
 				if (aux->next != NULL)
 				{
-					printf("\n\tNext: %d", aux->next->data);
+					printf("\n\tNext: %d", aux->next->column);
 				}
 				else if (aux->next == NULL)
 				{
@@ -314,7 +316,7 @@ void node(node_pointer head)
 
 				if (aux->back != NULL)
 				{
-					printf("\n\tBack: %d\n\n", aux->back->data);
+					printf("\n\tBack: %d\n\n", aux->back->column);
 				}
 				else if (aux->back == NULL)
 				{
@@ -327,25 +329,25 @@ void node(node_pointer head)
 			}
 			else
 			{
-				if (aux->data > n)
+				if (aux->column > column_data)
 				{
 					printf("\tNo such node was found. Search stopped to a node closest to what you asked, but with larger data number\n\n");
 				}
-				if (aux->data < n)
+				if (aux->column < column_data)
 				{
 					printf("\tNo such node was found. Search stopped to the node with largest data number, but what you asked was even bigger\n\n");
 				}				
 			}			
 		}
 		
-		if (n == head->data)
+		if (column_data == row_head[i]->column)
 	    {	    	    	
 	    	printf("\n\tYou added the head");
-			printf("\n\tData: %d", aux->data);
+			printf("\n\tData: %d", aux->column);
 
 			if (aux->next != NULL)
 			{
-				printf("\n\tNext: %d", aux->next->data);
+				printf("\n\tNext: %d", aux->next->column);
 			}
 			else if (aux->next == NULL)
 			{
@@ -358,7 +360,7 @@ void node(node_pointer head)
 
 			if (aux->back != NULL)
 			{
-				printf("\n\tBack: %d\n\n", aux->back->data);
+				printf("\n\tBack: %d\n\n", aux->back->column);
 			}
 			else if (aux->back == NULL)
 			{
@@ -370,7 +372,7 @@ void node(node_pointer head)
 			}	
 		}
 	}
-}*/
+}
 
 
 
