@@ -176,21 +176,21 @@ int delete(node_pointer *row_head)
 	scanf("%d", &row_data);
 	getchar();
 	int i = row_data - 1;
-	if (row_head[i] == NULL)
-	{
-		printf("\tThe list is empty\n\n");
-	}
 	/*
 	The way this delete works I have chosen not to check all the array elements to see if they ar NULL
 	I think this would slow the algorithm
 	Instead I chose that the user would input the array element and node first and the algorithm would check if there is something there
-	*/
-	printf("\tColumn: ");
-	scanf("%d", &column_data);
-	getchar();
-	
-	if (row_head[i] != NULL)
+	*/	
+	if (row_head[i] == NULL)
 	{
+		printf("\tThe list is empty\n\n");
+	}
+	else
+	{
+		printf("\tColumn: ");
+		scanf("%d", &column_data);
+		getchar();
+
 		aux = row_head[i];
 
 		if (column_data < row_head[i]->column)
