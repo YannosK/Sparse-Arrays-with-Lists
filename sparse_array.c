@@ -46,11 +46,12 @@ int main(void)
 
 	while (user_input != 'q')
 	{
-		printf("\nPrevious choice %c\n", user_input);
-		// Clear input buffer
 		while ((user_input = getchar()) != '\n' && user_input != EOF)
 			;
 		;
+
+		printf("\nPrevious choice %c\n", user_input);
+		// Clear input buffer
 		printf("q : quit, i : insert new node, p : prints nodes' data, d: deletes node using its data, n: shows the connections of the node\n");
 
 		if (user_input != 'q')
