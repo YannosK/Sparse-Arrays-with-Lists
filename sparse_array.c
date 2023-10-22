@@ -15,12 +15,14 @@ struct node
 	int column; // this will become row later on
 	node_pointer next;
 	node_pointer back;
+	node_pointer down;
+	node_pointer up;
 };
 
 // node_pointer head;
 
-void insert(node_pointer *r_h, int r, int c);
-int delete(node_pointer *r_h);
+void insert(node_pointer *r_h, node_pointer *c_h, int r, int c);
+int delete(node_pointer *r_h, int r, int c);
 void node(node_pointer r_h[]);
 void print(node_pointer r_h[]);
 
@@ -70,7 +72,7 @@ int main(void)
 				printf("\tColumn: ");
 				scanf("%d", &column_data);
 				getchar();
-				insert(row_head, row_data, column_data);
+				insert(row_head, column_head, row_data, column_data);
 				break;
 			case 'p':
 				printf("\n\n\tPRINT\n\n");
@@ -78,7 +80,20 @@ int main(void)
 				break;
 			case 'd':
 				printf("\n\n\tDELETE\n\n");
-				delete (row_head);
+				printf("\tInsert the data of the node you wish to delete\n\tRow: ");
+				scanf("%d", &row_data);
+				getchar();
+				if (row_head[row_data - 1] == NULL)
+				{
+					printf("\tThe list is empty\n\n");
+				}
+				else
+				{
+					printf("\tColumn: ");
+					scanf("%d", &column_data);
+					getchar();
+					delete (row_head, row_data, column_data);
+				}
 				break;
 			case 'n':
 				printf("\n\n\tNODE CONNECTIONS\n\n");
@@ -92,23 +107,22 @@ int main(void)
 	return 0;
 }
 
-void insert(node_pointer *r_h, int r, int c) // warning: you pass a pointer to head as an argument because otherwise head won't change globally
+void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you pass a pointer to head as an argument because otherwise head won't change globally
 {
 	node_pointer new_node, aux;
 
 	new_node = (node_pointer)malloc(sizeof(struct node));
 
 	int i = r - 1;
+	int j = c - 1;
 
 	new_node->column = c;
 	new_node->row = r;
 	new_node->next = NULL;
 	new_node->back = NULL;
 
-	// the case that the list is not empty
 	if (r_h[i] != NULL)
 	{
-		// the case that the new node should go after head, so we traverse the list to find the proper spot
 		if (new_node->column > r_h[i]->column)
 		{
 			aux = r_h[i];
@@ -118,7 +132,7 @@ void insert(node_pointer *r_h, int r, int c) // warning: you pass a pointer to h
 				aux = aux->next;
 			}
 
-			if (aux->next != NULL) // in between insertion
+			if (aux->next != NULL)
 			{
 				if (aux->next->column == new_node->column)
 				{
@@ -132,130 +146,114 @@ void insert(node_pointer *r_h, int r, int c) // warning: you pass a pointer to h
 					printf("\tData:%d\n\n", new_node->column);
 				}
 			}
-			else // tail insertion
+			else
 			{
-				new_node->next = aux->next; // could also be new_node->next = NULL;
+				new_node->next = aux->next;
 				new_node->back = aux;
 				aux->next = new_node;
 				printf("\tData:%d\n\n", new_node->column);
 			}
 		}
-
-		// the case that the new node should go before head, so it becomes the new head
-		if (new_node->column < r_h[i]->column)
+		else if (new_node->column < r_h[i]->column)
 		{
 			new_node->next = r_h[i];
 			r_h[i]->back = new_node;
 			r_h[i] = new_node;
 			printf("\tData:%d\n\n", new_node->column);
 		}
-
-		// the case that head is trying to be reinserted
-		if (new_node->column == r_h[i]->column)
+		else if (new_node->column == r_h[i]->column)
 		{
 			printf("\tInsertion not allowed. Node already exists\n\n");
 		}
+		else
+			exit(1);
 	}
-
-	// the case that the list is empty
-	if (r_h[i] == NULL)
+	else if (r_h[i] == NULL)
 	{
 		r_h[i] = new_node;
 
 		printf("\tData:%d\n\n", new_node->column);
 	}
+	else
+		exit(1);
 }
 
-int delete(node_pointer *r_h)
-{
-	node_pointer node_to_delete, aux, aux2;
-	int row_data, column_data;
-
-	printf("\tInsert the data of the node you wish to delete\n\tRow: ");
-	scanf("%d", &row_data);
-	getchar();
-	int i = row_data - 1;
-	/*
+/*
 	The way this delete works I have chosen not to check all the array elements to see if they ar NULL
 	I think this would slow the algorithm
 	Instead I chose that the user would input the array element and node first and the algorithm would check if there is something there
 	*/
-	if (r_h[i] == NULL)
+int delete(node_pointer *r_h, int r, int c)
+{
+	node_pointer node_to_delete, aux, aux2;
+
+	int i = r - 1;
+
+	aux = r_h[i];
+
+	if (c < r_h[i]->column)
 	{
-		printf("\tThe list is empty\n\n");
+		printf("\tNo such node was found. The node you added has data smaller than the head node\n\n");
 	}
-	else
+
+	// deleting something after the head
+	if (c > r_h[i]->column)
 	{
-		printf("\tColumn: ");
-		scanf("%d", &column_data);
-		getchar();
-
-		aux = r_h[i];
-
-		if (column_data < r_h[i]->column)
+		// this catches the case that there is only the head and someone inputs something larger than it
+		if (aux->next == NULL)
 		{
-			printf("\tNo such node was found. The node you added has data smaller than the head node\n\n");
+			printf("\tNo such node was found. All the nodes were parsed and your input node was not in the list\n\n");
+			return 0;
 		}
 
-		// deleting something after the head
-		if (column_data > r_h[i]->column)
+		while (aux->next->column < c && aux->next != NULL)
 		{
-			// this catches the case that there is only the head and someone inputs something larger than it
+			aux = aux->next;
+
 			if (aux->next == NULL)
 			{
 				printf("\tNo such node was found. All the nodes were parsed and your input node was not in the list\n\n");
 				return 0;
 			}
+		}
 
-			while (aux->next->column < column_data && aux->next != NULL)
+		if (aux->next->column == c)
+		{
+			node_to_delete = aux->next;
+			if (node_to_delete->next != NULL)
 			{
-				aux = aux->next;
-
-				if (aux->next == NULL)
-				{
-					printf("\tNo such node was found. All the nodes were parsed and your input node was not in the list\n\n");
-					return 0;
-				}
-			}
-
-			if (aux->next->column == column_data)
-			{
-				node_to_delete = aux->next;
-				if (node_to_delete->next != NULL)
-				{
-					aux2 = node_to_delete->next;
-					aux->next = aux2;
-					aux2->back = aux;
-					free(node_to_delete);
-					printf("\n");
-				}
-				else
-				{
-					aux->next = node_to_delete->next;
-					free(node_to_delete);
-					printf("\n");
-				}
+				aux2 = node_to_delete->next;
+				aux->next = aux2;
+				aux2->back = aux;
+				free(node_to_delete);
+				printf("\n");
 			}
 			else
 			{
-				printf("\tNo such node was found. You added a value that is in between the list's nodes\n\n");
+				aux->next = node_to_delete->next;
+				free(node_to_delete);
+				printf("\n");
 			}
 		}
+		else
+		{
+			printf("\tNo such node was found. You added a value that is in between the list's nodes\n\n");
+		}
+	}
 
-		// deleting the head
-		if (column_data == r_h[i]->column && r_h[i]->next != NULL)
-		{
-			r_h[i] = aux->next;
-			r_h[i]->back = NULL;
-			free(aux);
-			printf("\n");
-		}
-		else if (column_data == r_h[i]->column && r_h[i]->next == NULL)
-		{
-			r_h[i] = NULL;
-			free(aux);
-			printf("\n");
-		}
+	// deleting the head
+	if (c == r_h[i]->column && r_h[i]->next != NULL)
+	{
+		r_h[i] = aux->next;
+		r_h[i]->back = NULL;
+		free(aux);
+		printf("\n");
+	}
+	else if (c == r_h[i]->column && r_h[i]->next == NULL)
+	{
+		r_h[i] = NULL;
+		free(aux);
+		printf("\n");
 	}
 }
 
