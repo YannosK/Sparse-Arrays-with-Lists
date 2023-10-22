@@ -19,7 +19,7 @@ struct node
 
 // node_pointer head;
 
-void insert(node_pointer *r_h);
+void insert(node_pointer *r_h, int r, int c);
 int delete(node_pointer *r_h);
 void node(node_pointer r_h[]);
 void print(node_pointer r_h[]);
@@ -34,12 +34,13 @@ int main(void)
 	{
 		row_head[i] = NULL;
 	}
-
 	// in the beginning there is no list so the head is empty
 	for (int i = 0; i < 30; i++)
 	{
 		column_head[i] = NULL;
 	}
+
+	int row_data, column_data;
 
 	char user_input;
 	user_input = 'a';
@@ -63,7 +64,13 @@ int main(void)
 				break;
 			case 'i':
 				printf("\n\n\tINSERT\n\n");
-				insert(row_head);
+				printf("\tInsert node data\n\tRow: ");
+				scanf("%d", &row_data);
+				getchar();
+				printf("\tColumn: ");
+				scanf("%d", &column_data);
+				getchar();
+				insert(row_head, row_data, column_data);
 				break;
 			case 'p':
 				printf("\n\n\tPRINT\n\n");
@@ -85,24 +92,16 @@ int main(void)
 	return 0;
 }
 
-void insert(node_pointer *r_h) // warning: you pass a pointer to head as an argument because otherwise head won't change globally
+void insert(node_pointer *r_h, int r, int c) // warning: you pass a pointer to head as an argument because otherwise head won't change globally
 {
 	node_pointer new_node, aux;
-	int row_data, column_data;
 
 	new_node = (node_pointer)malloc(sizeof(struct node));
 
-	printf("\tInsert node data\n\tRow: ");
-	scanf("%d", &row_data);
-	getchar();
-	printf("\tColumn: ");
-	scanf("%d", &column_data);
-	getchar();
+	int i = r - 1;
 
-	int i = row_data - 1;
-
-	new_node->column = column_data;
-	new_node->row = row_data;
+	new_node->column = c;
+	new_node->row = r;
 	new_node->next = NULL;
 	new_node->back = NULL;
 
