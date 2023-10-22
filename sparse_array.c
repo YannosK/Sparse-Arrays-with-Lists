@@ -1,9 +1,5 @@
 /*
-SPARSE ARRAY
-
-A 30x30 sparse array
-
-I have created only the array of the rows
+Creating just the array of the rows
 From this array lists will spawn based on column numbers
 */
 #include <stdio.h>
