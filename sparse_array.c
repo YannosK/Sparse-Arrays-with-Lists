@@ -1,10 +1,5 @@
 /*
-SPARSE ARRAY
-
-A 30x30 sparse array
-
-I have created only the array of the rows
-From this array lists will spawn based on column numbers
+Might be asyncronous with other branches
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,10 +15,10 @@ struct node
 
 //node_pointer head;
 
-void insert(node_pointer *row_head);
-int delete(node_pointer *row_head);
-void node(node_pointer row_head[]);
-void print(node_pointer row_head[]);
+void insert(node_pointer *r_h);
+int delete(node_pointer *r_h);
+void node(node_pointer r_h[]);
+void print(node_pointer r_h[]);
 
 
 
@@ -88,7 +83,7 @@ int main (void)
 
 
 
-void insert (node_pointer *row_head) //warning: you pass a pointer to head as an argument because otherwise head won't change globally
+void insert (node_pointer *r_h) //warning: you pass a pointer to head as an argument because otherwise head won't change globally
 {
 	node_pointer new_node, aux; 
 	int row_data, column_data;
@@ -109,12 +104,12 @@ void insert (node_pointer *row_head) //warning: you pass a pointer to head as an
 	new_node->back = NULL;
 	
 	// the case that the list is not empty
-	if (row_head[i] != NULL)
+	if (r_h[i] != NULL)
 	{
         // the case that the new node should go after head, so we traverse the list to find the proper spot
-		if (new_node->column > row_head[i]->column)
+		if (new_node->column > r_h[i]->column)
 		{
-			aux = row_head[i];
+			aux = r_h[i];
 			
             while((aux->next != NULL) && (aux->next->column < new_node->column)) //When we insert a tail I wonder how the code doesn't break by checking aux->next->data
 		    {
@@ -145,25 +140,25 @@ void insert (node_pointer *row_head) //warning: you pass a pointer to head as an
 		}
 		
         // the case that the new node should go before head, so it becomes the new head
-		if(new_node->column < row_head[i]->column)
+		if(new_node->column < r_h[i]->column)
 		{
-			new_node->next = row_head[i];
-			row_head[i]->back = new_node;
-    		row_head[i] = new_node;
+			new_node->next = r_h[i];
+			r_h[i]->back = new_node;
+    		r_h[i] = new_node;
     		printf("\tData:%d\n\n", new_node->column);
 		}
 
 		//the case that head is trying to be reinserted
-		if (new_node->column == row_head[i]->column)
+		if (new_node->column == r_h[i]->column)
 		{
 			printf("\tInsertion not allowed. Node already exists\n\n");
 		}
 	}
 
     // the case that the list is empty			
-	if (row_head[i] == NULL)
+	if (r_h[i] == NULL)
 	{   
-		row_head[i] = new_node;
+		r_h[i] = new_node;
 		
 		printf("\tData:%d\n\n", new_node->column);
 	}
@@ -171,7 +166,7 @@ void insert (node_pointer *row_head) //warning: you pass a pointer to head as an
 
 
 
-int delete(node_pointer *row_head) 
+int delete(node_pointer *r_h) 
 {
 	node_pointer node_to_delete, aux, aux2;
 	int row_data, column_data;
@@ -185,7 +180,7 @@ int delete(node_pointer *row_head)
 	I think this would slow the algorithm
 	Instead I chose that the user would input the array element and node first and the algorithm would check if there is something there
 	*/	
-	if (row_head[i] == NULL)
+	if (r_h[i] == NULL)
 	{
 		printf("\tThe list is empty\n\n");
 	}
@@ -195,15 +190,15 @@ int delete(node_pointer *row_head)
 		scanf("%d", &column_data);
 		getchar();
 
-		aux = row_head[i];
+		aux = r_h[i];
 
-		if (column_data < row_head[i]->column)
+		if (column_data < r_h[i]->column)
 		{
 			printf("\tNo such node was found. The node you added has data smaller than the head node\n\n");
 		}
 	    
         // deleting something after the head
-	    if (column_data > row_head[i]->column)
+	    if (column_data > r_h[i]->column)
 		{
 			// this catches the case that there is only the head and someone inputs something larger than it
 			if (aux->next==NULL)
@@ -248,16 +243,16 @@ int delete(node_pointer *row_head)
 		}
 		
 		// deleting the head
-		if (column_data == row_head[i]->column  &&  row_head[i]->next != NULL)
+		if (column_data == r_h[i]->column  &&  r_h[i]->next != NULL)
 	    {
-	    	row_head[i] = aux->next;
-			row_head[i]->back = NULL;
+	    	r_h[i] = aux->next;
+			r_h[i]->back = NULL;
 	    	free(aux);
 			printf("\n");   	
 		}
-		else if (column_data == row_head[i]->column  &&  row_head[i]->next == NULL)
-		{			
-			row_head[i] = NULL;
+		else if (column_data == r_h[i]->column  &&  r_h[i]->next == NULL)
+		{
+			r_h[i] = NULL;
 	    	free(aux);
 			printf("\n");
 		}
@@ -266,7 +261,7 @@ int delete(node_pointer *row_head)
 
 
 
-void node(node_pointer row_head[])
+void node(node_pointer r_h[])
 {
 	node_pointer aux;
 	int row_data, column_data;
@@ -277,9 +272,9 @@ void node(node_pointer row_head[])
 	scanf("%d", &row_data);
 	getchar();
 	int i = row_data - 1;	
-	aux = row_head[i];
+	aux = r_h[i];
 
-	if (row_head[i] == NULL)
+	if (r_h[i] == NULL)
 	{
 		printf("\tThe list is empty\n\n");
 	}
@@ -289,12 +284,12 @@ void node(node_pointer row_head[])
 		scanf("%d", &column_data);
 		getchar();
 
-		if (column_data < row_head[i]->column)
+		if (column_data < r_h[i]->column)
 		{
 			printf("\tNo such node was found. The node you added has data smaller than the head node\n\n");
 		}
 
-	    if (column_data > row_head[i]->column)
+	    if (column_data > r_h[i]->column)
 		{
 		    while (aux->column < column_data  &&  aux->next != NULL)
 			{
@@ -344,7 +339,7 @@ void node(node_pointer row_head[])
 			}			
 		}
 		
-		if (column_data == row_head[i]->column)
+		if (column_data == r_h[i]->column)
 	    {	    	    	
 	    	printf("\n\tYou added the head");
 			printf("\n\tData: %d", aux->column);
@@ -380,7 +375,7 @@ void node(node_pointer row_head[])
 
 
 
-void print (node_pointer row_head[]) //I DO NOT UNDERSTAND
+void print (node_pointer r_h[]) //I DO NOT UNDERSTAND
 {
     node_pointer aux;
 	int row_data, i;
@@ -391,7 +386,7 @@ void print (node_pointer row_head[]) //I DO NOT UNDERSTAND
 
 	i = row_data -1;
 
-    aux=row_head[i];
+    aux=r_h[i];
 
 	if (aux == NULL)
 	{
