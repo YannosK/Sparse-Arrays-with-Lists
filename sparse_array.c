@@ -26,9 +26,6 @@ void print(node_pointer r_h[]);
 
 int main(void)
 {
-	char user_input;
-	user_input = 'a';
-
 	node_pointer row_head[30];
 	node_pointer column_head[30];
 
@@ -37,6 +34,15 @@ int main(void)
 	{
 		row_head[i] = NULL;
 	}
+
+	// in the beginning there is no list so the head is empty
+	for (int i = 0; i < 30; i++)
+	{
+		column_head[i] = NULL;
+	}
+
+	char user_input;
+	user_input = 'a';
 
 	while (user_input != 'q')
 	{
@@ -50,33 +56,29 @@ int main(void)
 			user_input = getchar();
 			getchar();
 
-			if (user_input == 'q')
+			switch (user_input)
 			{
+			case 'q':
 				printf("\n\n\tQUIT\n\n");
-			}
-
-			if (user_input == 'i')
-			{
+				break;
+			case 'i':
 				printf("\n\n\tINSERT\n\n");
 				insert(row_head);
-			}
-
-			if (user_input == 'p')
-			{
+				break;
+			case 'p':
 				printf("\n\n\tPRINT\n\n");
 				print(row_head);
-			}
-
-			if (user_input == 'd')
-			{
+				break;
+			case 'd':
 				printf("\n\n\tDELETE\n\n");
 				delete (row_head);
-			}
-
-			if (user_input == 'n')
-			{
+				break;
+			case 'n':
 				printf("\n\n\tNODE CONNECTIONS\n\n");
 				node(row_head);
+				break;
+			default:
+				break;
 			}
 		}
 	}
