@@ -26,9 +26,6 @@ void print(node_pointer r_h[]);
 
 int main(void)
 {
-	char user_input;
-	user_input = 'a';
-
 	node_pointer row_head[30];
 	node_pointer column_head[30];
 
@@ -38,6 +35,15 @@ int main(void)
 		row_head[i] = NULL;
 	}
 
+	// in the beginning there is no list so the head is empty
+	for (int i = 0; i < 30; i++)
+	{
+		column_head[i] = NULL;
+	}
+
+	char user_input;
+	user_input = 'a';
+
 	while (user_input != 'q')
 	{
 		printf("\nPrevious choice %c\n", user_input);
@@ -45,38 +51,34 @@ int main(void)
 
 		if (user_input != 'q')
 		{
-			// a way to clear the input buffer (that does not work on all compilers)
-			fflush(stdin);
-			user_input = getchar();
-			getchar();
+			// Clear input buffer
+			while ((user_input = getchar()) != '\n' && user_input != EOF)
+				;
+			;
 
-			if (user_input == 'q')
+			switch (user_input)
 			{
+			case 'q':
 				printf("\n\n\tQUIT\n\n");
-			}
-
-			if (user_input == 'i')
-			{
+				break;
+			case 'i':
 				printf("\n\n\tINSERT\n\n");
 				insert(row_head);
-			}
-
-			if (user_input == 'p')
-			{
+				break;
+			case 'p':
 				printf("\n\n\tPRINT\n\n");
 				print(row_head);
-			}
-
-			if (user_input == 'd')
-			{
+				break;
+			case 'd':
 				printf("\n\n\tDELETE\n\n");
 				delete (row_head);
-			}
-
-			if (user_input == 'n')
-			{
+				break;
+			case 'n':
 				printf("\n\n\tNODE CONNECTIONS\n\n");
 				node(row_head);
+				break;
+			default:
+				break;
 			}
 		}
 	}
