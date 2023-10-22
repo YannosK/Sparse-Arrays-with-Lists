@@ -10,7 +10,7 @@ From this array lists will spawn based on column numbers
 #include <stdlib.h>
 
 typedef struct node *node_pointer;
-struct node 
+struct node
 {
     int row;
 	int column; //this will become row later on
