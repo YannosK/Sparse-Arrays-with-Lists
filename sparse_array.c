@@ -1,10 +1,9 @@
 /*
-SPARSE ARRAY
+insert adds:
+	node(i,j) using row_head array (row=i (array element), column=j (list element))
+	node(j,i) using column_head array (row=j (list element), column=i (array element))
 
-A 30x30 sparse array
-
-I have created only the array of the rows
-From this array lists will spawn based on column numbers
+no nodes where i=j are allowed
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,6 +30,7 @@ int main(void)
 	user_input = 'a';
 
 	node_pointer row_head[30];
+	node_pointer column_head[30];
 
 	// in the beginning there is no list so the head is empty
 	for (int i = 0; i < 30; i++)
@@ -101,6 +101,7 @@ void insert(node_pointer *r_h) // warning: you pass a pointer to head as an argu
 	int i = row_data - 1;
 
 	new_node->column = column_data;
+	new_node->row = row_data;
 	new_node->next = NULL;
 	new_node->back = NULL;
 

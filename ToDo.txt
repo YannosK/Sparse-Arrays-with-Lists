@@ -1,0 +1,3 @@
+QUESTIONS
+
+-what happens with single nodes? (column = row)
