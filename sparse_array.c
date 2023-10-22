@@ -31,12 +31,10 @@ int main(void)
 	node_pointer row_head[30];
 	node_pointer column_head[30];
 
-	// in the beginning there is no list so the head is empty
 	for (int i = 0; i < 30; i++)
 	{
 		row_head[i] = NULL;
 	}
-	// in the beginning there is no list so the head is empty
 	for (int i = 0; i < 30; i++)
 	{
 		column_head[i] = NULL;
@@ -120,7 +118,10 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 	new_node->row = r;
 	new_node->next = NULL;
 	new_node->back = NULL;
+	new_node->down = NULL;
+	new_node->up = NULL;
 
+	// INSERT 1
 	if (r_h[i] != NULL)
 	{
 		if (new_node->column > r_h[i]->column)
@@ -173,6 +174,63 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 		r_h[i] = new_node;
 
 		printf("\tData:%d\n\n", new_node->column);
+	}
+	else
+		exit(1);
+
+	// INSERT 2
+	if (c_h[j] != NULL)
+	{
+		if (new_node->row > c_h[j]->row)
+		{
+			aux = c_h[j];
+
+			while ((aux->down != NULL) && (aux->down->row < new_node->row)) // When we insert a tail I wonder how the code doesn't break by checking aux->down->data
+			{
+				aux = aux->down;
+			}
+
+			if (aux->down != NULL)
+			{
+				if (aux->down->row == new_node->row)
+				{
+					printf("\tInsertion not allowed. Node already exists\n\n");
+				}
+				else
+				{
+					new_node->down = aux->down;
+					new_node->up = aux;
+					aux->down = new_node;
+					printf("\tData:%d\n\n", new_node->row);
+				}
+			}
+			else
+			{
+				new_node->down = aux->down;
+				new_node->up = aux;
+				aux->down = new_node;
+				printf("\tData:%d\n\n", new_node->row);
+			}
+		}
+		else if (new_node->row < c_h[j]->row)
+		{
+			new_node->down = c_h[j];
+			c_h[j]->up = new_node;
+			c_h[j] = new_node;
+			printf("\tData:%d\n\n", new_node->row);
+		}
+		else if (new_node->row == c_h[j]->row)
+		{
+			printf("\tInsertion not allowed. Node already exists\n\n");
+		}
+		else
+			exit(1);
+	}
+	else if (c_h[j] == NULL)
+	{
+		c_h[j] = new_node;
+
+		printf("\tData:%d\n\n", new_node->row);
 	}
 	else
 		exit(1);
