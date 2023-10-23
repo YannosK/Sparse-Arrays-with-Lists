@@ -352,33 +352,36 @@ void node(node_pointer r_h[])
 
 			if (aux->column == column_data)
 			{
-				printf("\n\tData: %d", aux->column);
+				printf("\n\tRow: %d", aux->row);
+				printf("\n\tColumn: %d", aux->column);
 
 				if (aux->next != NULL)
-				{
-					printf("\n\tNext: %d", aux->next->column);
-				}
+					printf("\n\tNext: %d.%d", aux->next->row, aux->next->column);
 				else if (aux->next == NULL)
-				{
 					printf("\n\tNext: NULL");
-				}
 				else
-				{
 					printf("NEXT IS NOT CONNECTED");
-				}
 
 				if (aux->back != NULL)
-				{
-					printf("\n\tBack: %d\n\n", aux->back->column);
-				}
+					printf("\n\tBack: %d.%d", aux->back->row, aux->back->column);
 				else if (aux->back == NULL)
-				{
-					printf("\n\tBack: NULL\n\n");
-				}
+					printf("\n\tBack: NULL");
 				else
-				{
-					printf("BACK IS NOT CONNECTED\n\n");
-				}
+					printf("BACK IS NOT CONNECTED");
+
+				if (aux->up != NULL)
+					printf("\n\tUp: %d.%d", aux->up->row, aux->up->column);
+				else if (aux->up == NULL)
+					printf("\n\tUp: NULL");
+				else
+					printf("UP IS NOT CONNECTED");
+
+				if (aux->down != NULL)
+					printf("\n\tDown: %d.%d\n\n", aux->down->row, aux->down->column);
+				else if (aux->down == NULL)
+					printf("\n\tDown: NULL\n\n");
+				else
+					printf("DOWN IS NOT CONNECTED\n\n");
 			}
 			else
 			{
@@ -396,33 +399,36 @@ void node(node_pointer r_h[])
 		if (column_data == r_h[i]->column)
 		{
 			printf("\n\tYou added the head");
-			printf("\n\tData: %d", aux->column);
+			printf("\n\tRow: %d", aux->row);
+			printf("\n\tColumn: %d", aux->column);
 
 			if (aux->next != NULL)
-			{
-				printf("\n\tNext: %d", aux->next->column);
-			}
+				printf("\n\tNext: %d.%d", aux->next->row, aux->next->column);
 			else if (aux->next == NULL)
-			{
 				printf("\n\tNext: NULL");
-			}
 			else
-			{
 				printf("NEXT IS NOT CONNECTED");
-			}
 
 			if (aux->back != NULL)
-			{
-				printf("\n\tBack: %d\n\n", aux->back->column);
-			}
+				printf("\n\tBack: %d.%d", aux->back->row, aux->back->column);
 			else if (aux->back == NULL)
-			{
-				printf("\n\tBack: NULL\n\n");
-			}
+				printf("\n\tBack: NULL");
 			else
-			{
-				printf("BACK IS NOT CONNECTED\n\n");
-			}
+				printf("BACK IS NOT CONNECTED");
+
+			if (aux->up != NULL)
+				printf("\n\tUp: %d.%d", aux->up->row, aux->up->column);
+			else if (aux->up == NULL)
+				printf("\n\tUp: NULL");
+			else
+				printf("UP IS NOT CONNECTED");
+
+			if (aux->down != NULL)
+				printf("\n\tDown: %d.%d\n\n", aux->down->row, aux->down->column);
+			else if (aux->down == NULL)
+				printf("\n\tDown: NULL\n\n");
+			else
+				printf("DOWN IS NOT CONNECTED\n\n");
 		}
 	}
 }
