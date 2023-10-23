@@ -1,9 +1,10 @@
 /*
-insert adds:
-	node(i,j) using row_head array (row=i (array element), column=j (list element))
-	node(j,i) using column_head array (row=j (list element), column=i (array element))
+SPARSE ARRAY
 
+A 30x30 sparse array
 no nodes where i=j are allowed
+
+delete does not work
 */
 #include <stdio.h>
 #include <stdlib.h>
