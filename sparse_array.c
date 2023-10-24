@@ -1,10 +1,5 @@
 /*
-SPARSE ARRAY
-
-A 30x30 sparse array
-no nodes where i=j are allowed
-
-delete does not work
+Might be asyncronous with other branches
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,12 +15,11 @@ struct node
 	node_pointer up;
 };
 
-// node_pointer head;
-
 void insert(node_pointer *r_h, node_pointer *c_h, int r, int c);
 int delete(node_pointer *r_h, int r, int c);
 void node(node_pointer r_h[]);
-void print(node_pointer r_h[]);
+void print_row(node_pointer r_h[]);
+void print_column(node_pointer c_h[]);
 
 int main(void)
 {
@@ -33,13 +27,9 @@ int main(void)
 	node_pointer column_head[30];
 
 	for (int i = 0; i < 30; i++)
-	{
 		row_head[i] = NULL;
-	}
 	for (int i = 0; i < 30; i++)
-	{
 		column_head[i] = NULL;
-	}
 
 	int row_data, column_data;
 
@@ -49,7 +39,7 @@ int main(void)
 	while (user_input != 'q')
 	{
 		printf("\nPrevious choice %c\n", user_input);
-		printf("q : quit, i : insert new node, p : prints nodes' data, d: deletes node using its data, n: shows the connections of the node\n");
+		printf("q : quit, i : insert new node, d: deletes node using its data, r : prints all data of a row, c: prints all data of a column, n: shows the connections of the node\n");
 
 		if (user_input != 'q')
 		{
@@ -72,10 +62,15 @@ int main(void)
 				scanf("%d", &column_data);
 				getchar();
 				insert(row_head, column_head, row_data, column_data);
+				insert(row_head, column_head, column_data, row_data);
 				break;
-			case 'p':
-				printf("\n\n\tPRINT\n\n");
-				print(row_head);
+			case 'r':
+				printf("\n\n\tPRINT ROW DATA\n\n");
+				print_row(row_head);
+				break;
+			case 'c':
+				printf("\n\n\tPRINT COLUMN DATA\n\n");
+				print_column(column_head);
 				break;
 			case 'd':
 				printf("\n\n\tDELETE\n\n");
@@ -83,9 +78,7 @@ int main(void)
 				scanf("%d", &row_data);
 				getchar();
 				if (row_head[row_data - 1] == NULL)
-				{
 					printf("\tThe list is empty\n\n");
-				}
 				else
 				{
 					printf("\tColumn: ");
@@ -130,16 +123,12 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 			aux = r_h[i];
 
 			while ((aux->next != NULL) && (aux->next->column < new_node->column)) // When we insert a tail I wonder how the code doesn't break by checking aux->next->data
-			{
 				aux = aux->next;
-			}
 
 			if (aux->next != NULL)
 			{
 				if (aux->next->column == new_node->column)
-				{
 					printf("\tInsertion not allowed. Node already exists\n\n");
-				}
 				else
 				{
 					new_node->next = aux->next;
@@ -161,16 +150,12 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 			r_h[i] = new_node;
 		}
 		else if (new_node->column == r_h[i]->column)
-		{
 			printf("\tInsertion not allowed. Node already exists\n\n");
-		}
 		else
 			exit(1);
 	}
 	else if (r_h[i] == NULL)
-	{
 		r_h[i] = new_node;
-	}
 	else
 		exit(1);
 
@@ -182,16 +167,12 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 			aux = c_h[j];
 
 			while ((aux->down != NULL) && (aux->down->row < new_node->row)) // When we insert a tail I wonder how the code doesn't break by checking aux->down->data
-			{
 				aux = aux->down;
-			}
 
 			if (aux->down != NULL)
 			{
 				if (aux->down->row == new_node->row)
-				{
 					printf("\tInsertion not allowed. Node already exists\n\n");
-				}
 				else
 				{
 					new_node->down = aux->down;
@@ -213,16 +194,12 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 			c_h[j] = new_node;
 		}
 		else if (new_node->row == c_h[j]->row)
-		{
 			printf("\tInsertion not allowed. Node already exists\n\n");
-		}
 		else
 			exit(1);
 	}
 	else if (c_h[j] == NULL)
-	{
 		c_h[j] = new_node;
-	}
 	else
 		exit(1);
 }
@@ -424,7 +401,7 @@ void node(node_pointer r_h[])
 	}
 }
 
-void print(node_pointer r_h[])
+void print_row(node_pointer r_h[])
 {
 	node_pointer aux;
 	int row_data, i;
@@ -438,6 +415,32 @@ void print(node_pointer r_h[])
 	aux = r_h[i];
 
 	if (aux == NULL)
+		printf("\tThe list is empty\n");
+	else
+	{
+		while (aux != NULL)
+		{
+			printf("\t%d\n", aux->column);
+			aux = aux->next;
+		}
+	}
+	printf("\n");
+}
+
+void print_column(node_pointer c_h[])
+{
+	node_pointer aux;
+	int column_data, i;
+
+	printf("\tInsert the column whose elements you want printed: ");
+	scanf("%d", &column_data);
+	getchar();
+
+	i = column_data - 1;
+
+	aux = c_h[i];
+
+	if (aux == NULL)
 	{
 		printf("\tThe list is empty\n");
 	}
@@ -445,8 +448,8 @@ void print(node_pointer r_h[])
 	{
 		while (aux != NULL)
 		{
-			printf("\t%d\n", aux->column);
-			aux = aux->next;
+			printf("\t%d\n", aux->row);
+			aux = aux->down;
 		}
 	}
 	printf("\n");
