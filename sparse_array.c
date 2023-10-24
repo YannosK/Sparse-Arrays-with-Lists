@@ -20,8 +20,8 @@ struct node
 	node_pointer up;
 };
 
-void insert(node_pointer *r_h, node_pointer *c_h, int r, int c);
-int delete(node_pointer *r_h, int r, int c);
+int insert(node_pointer *r_h, node_pointer *c_h, int r, int c);
+int delete(node_pointer *r_h, node_pointer *c_h, int r, int c);
 void node(node_pointer r_h[]);
 void print_row(node_pointer r_h[]);
 void print_column(node_pointer c_h[]);
@@ -69,14 +69,6 @@ int main(void)
 				insert(row_head, column_head, row_data, column_data);
 				insert(row_head, column_head, column_data, row_data);
 				break;
-			case 'r':
-				printf("\n\n\tPRINT ROW DATA\n\n");
-				print_row(row_head);
-				break;
-			case 'c':
-				printf("\n\n\tPRINT COLUMN DATA\n\n");
-				print_column(column_head);
-				break;
 			case 'd':
 				printf("\n\n\tDELETE\n\n");
 				printf("\tInsert the data of the node you wish to delete\n\tRow: ");
@@ -89,8 +81,22 @@ int main(void)
 					printf("\tColumn: ");
 					scanf("%d", &column_data);
 					getchar();
-					delete (row_head, row_data, column_data);
+					if (column_head[column_data - 1] == NULL)
+						printf("\tThe list is empty\n\n");
+					else
+					{
+						delete (row_head, column_head, row_data, column_data);
+						delete (row_head, column_head, column_data, row_data);
+					}
 				}
+				break;
+			case 'r':
+				printf("\n\n\tPRINT ROW DATA\n\n");
+				print_row(row_head);
+				break;
+			case 'c':
+				printf("\n\n\tPRINT COLUMN DATA\n\n");
+				print_column(column_head);
 				break;
 			case 'n':
 				printf("\n\n\tNODE CONNECTIONS\n\n");
@@ -104,7 +110,7 @@ int main(void)
 	return 0;
 }
 
-void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you pass a pointer to head as an argument because otherwise head won't change globally
+int insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you pass a pointer to head as an argument because otherwise head won't change globally
 {
 	node_pointer new_node, aux;
 
@@ -133,7 +139,10 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 			if (aux->next != NULL)
 			{
 				if (aux->next->column == new_node->column)
+				{
 					printf("\tInsertion not allowed. Node already exists\n\n");
+					return 0;
+				}
 				else
 				{
 					new_node->next = aux->next;
@@ -155,7 +164,10 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 			r_h[i] = new_node;
 		}
 		else if (new_node->column == r_h[i]->column)
+		{
 			printf("\tInsertion not allowed. Node already exists\n\n");
+			return 0;
+		}
 		else
 			exit(1);
 	}
@@ -177,7 +189,10 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 			if (aux->down != NULL)
 			{
 				if (aux->down->row == new_node->row)
+				{
 					printf("\tInsertion not allowed. Node already exists\n\n");
+					exit(1); // it has to terminate because something was inserted
+				}
 				else
 				{
 					new_node->down = aux->down;
@@ -199,7 +214,10 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 			c_h[j] = new_node;
 		}
 		else if (new_node->row == c_h[j]->row)
+		{
 			printf("\tInsertion not allowed. Node already exists\n\n");
+			exit(1); // it has to terminate because something was inserted
+		}
 		else
 			exit(1);
 	}
@@ -209,77 +227,97 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 		exit(1);
 }
 
-int delete(node_pointer *r_h, int r, int c)
+int delete(node_pointer *r_h, node_pointer *c_h, int r, int c)
 {
-	node_pointer node_to_delete, aux, aux2;
+	node_pointer node_to_delete, c_aux, c_aux2, r_aux, r_aux2;
 
 	int i = r - 1;
+	int j = c - 1;
 
-	aux = r_h[i];
-
-	if (c < r_h[i]->column)
-	{
-		printf("\tNo such node was found. The node you added has data smaller than the head node\n\n");
-	}
+	c_aux = r_h[i];
+	r_aux = c_h[j];
 
 	if (c > r_h[i]->column)
 	{
-		// this catches the case that there is only the head and someone inputs something larger than it
-		if (aux->next == NULL)
+		while (c_aux->next != NULL && c_aux->next->column < c)
 		{
-			printf("\tNo such node was found. All the nodes were parsed and your input node was not in the list\n\n");
-			return 0;
+			c_aux = c_aux->next;
 		}
 
-		while (aux->next->column < c && aux->next != NULL)
+		if (c_aux->next->column == c)
 		{
-			aux = aux->next;
-
-			if (aux->next == NULL)
-			{
-				printf("\tNo such node was found. All the nodes were parsed and your input node was not in the list\n\n");
-				return 0;
-			}
-		}
-
-		if (aux->next->column == c)
-		{
-			node_to_delete = aux->next;
+			node_to_delete = c_aux->next;
 			if (node_to_delete->next != NULL)
 			{
-				aux2 = node_to_delete->next;
-				aux->next = aux2;
-				aux2->back = aux;
-				free(node_to_delete);
+				c_aux2 = node_to_delete->next;
+				c_aux->next = c_aux2;
+				c_aux2->back = c_aux;
 				printf("\n");
 			}
 			else
 			{
-				aux->next = node_to_delete->next;
-				free(node_to_delete);
+				c_aux->next = node_to_delete->next; // could as well be c_aux->next = NULL
 				printf("\n");
 			}
 		}
-		else
-		{
-			printf("\tNo such node was found. You added a value that is in between the list's nodes\n\n");
-		}
 	}
-
-	// deleting the head
-	if (c == r_h[i]->column && r_h[i]->next != NULL)
+	else if (c == r_h[i]->column && r_h[i]->next != NULL)
 	{
-		r_h[i] = aux->next;
+		node_to_delete = c_aux;
+		r_h[i] = c_aux->next;
 		r_h[i]->back = NULL;
-		free(aux);
 		printf("\n");
 	}
 	else if (c == r_h[i]->column && r_h[i]->next == NULL)
 	{
+		node_to_delete = c_aux;
 		r_h[i] = NULL;
-		free(aux);
 		printf("\n");
 	}
+	else
+		exit(1);
+
+	if (r > c_h[j]->column)
+	{
+		while (r_aux->down != NULL && r_aux->down->column < c)
+		{
+			r_aux = r_aux->down;
+		}
+
+		if (r_aux->down->column == c)
+		{
+			node_to_delete = r_aux->down;
+			if (node_to_delete->down != NULL)
+			{
+				r_aux2 = node_to_delete->down;
+				r_aux->down = r_aux2;
+				r_aux2->up = r_aux;
+				printf("\n");
+			}
+			else
+			{
+				r_aux->down = node_to_delete->down; // could as well be r_aux->down = NULL
+				printf("\n");
+			}
+		}
+	}
+	else if (r == c_h[j]->column && c_h[j]->down != NULL)
+	{
+		node_to_delete = r_aux;
+		c_h[j] = r_aux->down;
+		c_h[j]->up = NULL;
+		printf("\n");
+	}
+	else if (r == c_h[j]->column && c_h[j]->down == NULL)
+	{
+		node_to_delete = r_aux;
+		c_h[j] = NULL;
+		printf("\n");
+	}
+	else
+		exit(1);
+
+	free(node_to_delete);
 }
 
 void node(node_pointer r_h[])
