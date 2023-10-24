@@ -122,7 +122,7 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 	new_node->down = NULL;
 	new_node->up = NULL;
 
-	// INSERT 1
+	// INSERT IN ROW
 	if (r_h[i] != NULL)
 	{
 		if (new_node->column > r_h[i]->column)
@@ -145,7 +145,6 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 					new_node->next = aux->next;
 					new_node->back = aux;
 					aux->next = new_node;
-					printf("\tData:%d\n\n", new_node->column);
 				}
 			}
 			else
@@ -153,7 +152,6 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 				new_node->next = aux->next;
 				new_node->back = aux;
 				aux->next = new_node;
-				printf("\tData:%d\n\n", new_node->column);
 			}
 		}
 		else if (new_node->column < r_h[i]->column)
@@ -161,7 +159,6 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 			new_node->next = r_h[i];
 			r_h[i]->back = new_node;
 			r_h[i] = new_node;
-			printf("\tData:%d\n\n", new_node->column);
 		}
 		else if (new_node->column == r_h[i]->column)
 		{
@@ -173,13 +170,11 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 	else if (r_h[i] == NULL)
 	{
 		r_h[i] = new_node;
-
-		printf("\tData:%d\n\n", new_node->column);
 	}
 	else
 		exit(1);
 
-	// INSERT 2
+	// INSERT IN COLUMN
 	if (c_h[j] != NULL)
 	{
 		if (new_node->row > c_h[j]->row)
@@ -202,7 +197,6 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 					new_node->down = aux->down;
 					new_node->up = aux;
 					aux->down = new_node;
-					printf("\tData:%d\n\n", new_node->row);
 				}
 			}
 			else
@@ -210,7 +204,6 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 				new_node->down = aux->down;
 				new_node->up = aux;
 				aux->down = new_node;
-				printf("\tData:%d\n\n", new_node->row);
 			}
 		}
 		else if (new_node->row < c_h[j]->row)
@@ -218,7 +211,6 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 			new_node->down = c_h[j];
 			c_h[j]->up = new_node;
 			c_h[j] = new_node;
-			printf("\tData:%d\n\n", new_node->row);
 		}
 		else if (new_node->row == c_h[j]->row)
 		{
@@ -230,8 +222,6 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 	else if (c_h[j] == NULL)
 	{
 		c_h[j] = new_node;
-
-		printf("\tData:%d\n\n", new_node->row);
 	}
 	else
 		exit(1);
