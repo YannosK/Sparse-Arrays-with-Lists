@@ -237,6 +237,7 @@ int delete(node_pointer *r_h, node_pointer *c_h, int r, int c)
 	c_aux = r_h[i];
 	r_aux = c_h[j];
 
+	// BREAK ROW LIST CONNECTIONS
 	if (c > r_h[i]->column)
 	{
 		while (c_aux->next != NULL && c_aux->next->column < c)
@@ -252,12 +253,12 @@ int delete(node_pointer *r_h, node_pointer *c_h, int r, int c)
 				c_aux2 = node_to_delete->next;
 				c_aux->next = c_aux2;
 				c_aux2->back = c_aux;
-				printf("\n");
+				printf("\tBack node: %d.%d\n\tNext node: %d.%d\n", c_aux->column, c_aux2->column);
 			}
 			else
 			{
 				c_aux->next = node_to_delete->next; // could as well be c_aux->next = NULL
-				printf("\n");
+				printf("\tBack node: %d.%d\n\tNext node: NULL\n", c_aux->column);
 			}
 		}
 	}
@@ -266,25 +267,26 @@ int delete(node_pointer *r_h, node_pointer *c_h, int r, int c)
 		node_to_delete = c_aux;
 		r_h[i] = c_aux->next;
 		r_h[i]->back = NULL;
-		printf("\n");
+		printf("\tBack node: NULL\n\tNext node: %d.%d\n", r_h[i]->column);
 	}
 	else if (c == r_h[i]->column && r_h[i]->next == NULL)
 	{
 		node_to_delete = c_aux;
 		r_h[i] = NULL;
-		printf("\n");
+		printf("\tBack node: NULL\n\tNext node: NULL\n");
 	}
 	else
 		exit(1);
 
-	if (r > c_h[j]->column)
+	// BREAK COLUMN LIST CONNECTIONS
+	if (r > c_h[j]->row)
 	{
-		while (r_aux->down != NULL && r_aux->down->column < c)
+		while (r_aux->down != NULL && r_aux->down->row < c)
 		{
 			r_aux = r_aux->down;
 		}
 
-		if (r_aux->down->column == c)
+		if (r_aux->down->row == c)
 		{
 			node_to_delete = r_aux->down;
 			if (node_to_delete->down != NULL)
@@ -292,31 +294,32 @@ int delete(node_pointer *r_h, node_pointer *c_h, int r, int c)
 				r_aux2 = node_to_delete->down;
 				r_aux->down = r_aux2;
 				r_aux2->up = r_aux;
-				printf("\n");
+				printf("\tUp node: %d.%d\n\tDown node: %d.%d\n", r_aux->row, r_aux2->row);
 			}
 			else
 			{
 				r_aux->down = node_to_delete->down; // could as well be r_aux->down = NULL
-				printf("\n");
+				printf("\tUp node: %d.%d\n\tDown node: NULL\n", r_aux->row);
 			}
 		}
 	}
-	else if (r == c_h[j]->column && c_h[j]->down != NULL)
+	else if (r == c_h[j]->row && c_h[j]->down != NULL)
 	{
 		node_to_delete = r_aux;
 		c_h[j] = r_aux->down;
 		c_h[j]->up = NULL;
-		printf("\n");
+		printf("\tUp node: NULL\n\tDown node: %d.%d\n", c_h[j]->row);
 	}
-	else if (r == c_h[j]->column && c_h[j]->down == NULL)
+	else if (r == c_h[j]->row && c_h[j]->down == NULL)
 	{
 		node_to_delete = r_aux;
 		c_h[j] = NULL;
-		printf("\n");
+		printf("\tUp node: NULL\n\tDown node: NULL\n");
 	}
 	else
 		exit(1);
 
+	printf("\tNode to delete: %d.%d\n\n", node_to_delete->row, node_to_delete->column);
 	free(node_to_delete);
 }
 
