@@ -1,5 +1,10 @@
 /*
-Might be asyncronous with other branches
+SPARSE ARRAY
+
+A 30x30 sparse array
+no nodes where i=j are allowed
+
+delete does not work
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,7 +13,7 @@ typedef struct node *node_pointer;
 struct node
 {
 	int row;
-	int column; // this will become row later on
+	int column;
 	node_pointer next;
 	node_pointer back;
 	node_pointer down;
@@ -204,11 +209,6 @@ void insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you 
 		exit(1);
 }
 
-/*
-	The way this delete works I have chosen not to check all the array elements to see if they ar NULL
-	I think this would slow the algorithm
-	Instead I chose that the user would input the array element and node first and the algorithm would check if there is something there
-	*/
 int delete(node_pointer *r_h, int r, int c)
 {
 	node_pointer node_to_delete, aux, aux2;
@@ -222,7 +222,6 @@ int delete(node_pointer *r_h, int r, int c)
 		printf("\tNo such node was found. The node you added has data smaller than the head node\n\n");
 	}
 
-	// deleting something after the head
 	if (c > r_h[i]->column)
 	{
 		// this catches the case that there is only the head and someone inputs something larger than it
