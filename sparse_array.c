@@ -1,8 +1,5 @@
 /*
-SPARSE ARRAY
-
-A 30x30 sparse array
-no nodes where i=j are allowed
+Might be asyncronous with other branches
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -138,7 +135,7 @@ int insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you p
 			{
 				if (aux->next->column == new_node->column)
 				{
-					printf("\tInsertion not allowed. Node already exists\n\n");
+					printf("\tInsertion not allowed. Node already exists\n");
 					return 0;
 				}
 				else
@@ -163,7 +160,7 @@ int insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you p
 		}
 		else if (new_node->column == r_h[i]->column)
 		{
-			printf("\tInsertion not allowed. Node already exists\n\n");
+			printf("\tInsertion not allowed. Node already exists\n");
 			return 0;
 		}
 		else
@@ -342,7 +339,7 @@ void node(node_pointer r_h[])
 
 	if (r_h[i] == NULL)
 	{
-		printf("\tThe list is empty\n\n");
+		printf("\tNo such node was found\n\n");
 	}
 	else
 	{
@@ -352,7 +349,7 @@ void node(node_pointer r_h[])
 
 		if (column_data < r_h[i]->column)
 		{
-			printf("\tNo such node was found. The node you added has data smaller than the head node\n\n");
+			printf("\tNo such node was found\n\n");
 		}
 
 		if (column_data > r_h[i]->column)
@@ -399,11 +396,11 @@ void node(node_pointer r_h[])
 			{
 				if (aux->column > column_data)
 				{
-					printf("\tNo such node was found. Search stopped to a node closest to what you asked, but with larger data number\n\n");
+					printf("\tNo such node was found\n\n");
 				}
 				if (aux->column < column_data)
 				{
-					printf("\tNo such node was found. Search stopped to the node with largest data number, but what you asked was even bigger\n\n");
+					printf("\tNo such node was found\n\n");
 				}
 			}
 		}
