@@ -20,9 +20,9 @@ struct node
 
 int insert(node_pointer *r_h, node_pointer *c_h, int r, int c);
 int delete(node_pointer *r_h, node_pointer *c_h, int r, int c);
-void node(node_pointer r_h[]);
-void print_row(node_pointer r_h[]);
-void print_column(node_pointer c_h[]);
+void node(node_pointer *r_h);
+void print_row(node_pointer *r_h);
+void print_column(node_pointer *c_h);
 
 int main(void)
 {
@@ -125,11 +125,11 @@ int insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you p
 	new_node->up = NULL;
 
 	// INSERT IN ROW
-	if (r_h[i] != NULL)
+	if ((*(r_h+i)) != NULL)
 	{
-		if (new_node->column > r_h[i]->column)
+		if (new_node->column > (*(r_h+i))->column)
 		{
-			aux = r_h[i];
+			aux = (*(r_h+i));
 
 			while ((aux->next != NULL) && (aux->next->column < new_node->column)) // When we insert a tail I wonder how the code doesn't break by checking aux->next->data
 				aux = aux->next;
@@ -155,13 +155,13 @@ int insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you p
 				aux->next = new_node;
 			}
 		}
-		else if (new_node->column < r_h[i]->column)
+		else if (new_node->column < (*(r_h+i))->column)
 		{
-			new_node->next = r_h[i];
-			r_h[i]->back = new_node;
-			r_h[i] = new_node;
+			new_node->next = (*(r_h+i));
+			(*(r_h+i))->back = new_node;
+			(*(r_h+i)) = new_node;
 		}
-		else if (new_node->column == r_h[i]->column)
+		else if (new_node->column == (*(r_h+i))->column)
 		{
 			printf("\tInsertion not allowed. Node already exists\n");
 			return 0;
@@ -169,8 +169,8 @@ int insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you p
 		else
 			exit(1);
 	}
-	else if (r_h[i] == NULL)
-		r_h[i] = new_node;
+	else if ((*(r_h+i)) == NULL)
+		(*(r_h+i)) = new_node;
 	else
 		exit(1);
 
@@ -327,7 +327,7 @@ int delete(node_pointer *r_h, node_pointer *c_h, int r, int c)
 	free(node_to_delete);
 }
 
-void node(node_pointer r_h[])
+void node(node_pointer *r_h)
 {
 	node_pointer aux;
 	int row_data, column_data;
@@ -445,7 +445,7 @@ void node(node_pointer r_h[])
 	}
 }
 
-void print_row(node_pointer r_h[])
+void print_row(node_pointer *r_h)
 {
 	node_pointer aux;
 	int row_data, i;
@@ -471,7 +471,7 @@ void print_row(node_pointer r_h[])
 	printf("\n");
 }
 
-void print_column(node_pointer c_h[])
+void print_column(node_pointer *c_h)
 {
 	node_pointer aux;
 	int column_data, i;
