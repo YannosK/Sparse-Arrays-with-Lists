@@ -1,8 +1,5 @@
 /*
-SPARSE ARRAY
-
-A 30x30 sparse array
-no nodes where i=j are allowed
+Might be asyncronous with other branches
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,8 +15,8 @@ struct node
 	node_pointer up;
 };
 
-int insert(node_pointer *r_h, node_pointer *c_h, int r, int c);
-int delete(node_pointer *r_h, node_pointer *c_h, int r, int c);
+int insert(node_pointer r_h[], node_pointer c_h[], int r, int c);
+int delete(node_pointer r_h[], node_pointer c_h[], int r, int c);
 void node(node_pointer r_h[]);
 void print_row(node_pointer r_h[]);
 void print_column(node_pointer c_h[]);
@@ -108,7 +105,7 @@ int main(void)
 	return 0;
 }
 
-int insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you pass a pointer to head as an argument because otherwise head won't change globally
+int insert(node_pointer r_h[], node_pointer c_h[], int r, int c) // warning: you pass a pointer to head as an argument because otherwise head won't change globally
 {
 	node_pointer new_node, aux;
 
@@ -225,7 +222,7 @@ int insert(node_pointer *r_h, node_pointer *c_h, int r, int c) // warning: you p
 		exit(1);
 }
 
-int delete(node_pointer *r_h, node_pointer *c_h, int r, int c)
+int delete(node_pointer r_h[], node_pointer c_h[], int r, int c)
 {
 	node_pointer node_to_delete, c_aux, c_aux2, r_aux, r_aux2;
 
