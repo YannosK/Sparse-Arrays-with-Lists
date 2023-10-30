@@ -376,9 +376,6 @@ void node(node_pointer r_h[])
 {
 	node_pointer aux;
 	int row_data, column_data;
-	/*
-	Similarly with delete I chose that the user would input the array element and node first and the algorithm would check if there is something there
-	*/
 	printf("\tInsert the data of the node you wish to see its connections\n\tRow: ");
 	scanf("%d", &row_data);
 	getchar();
