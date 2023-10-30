@@ -73,14 +73,14 @@ int main(void)
 				scanf("%d", &row_data);
 				getchar();
 				if (row_head[row_data - 1] == NULL)
-					printf("\tThe list is empty\n\n");
+					printf("\tNo such node was found\n\n");
 				else
 				{
 					printf("\tColumn: ");
 					scanf("%d", &column_data);
 					getchar();
 					if (column_head[column_data - 1] == NULL)
-						printf("\tThe list is empty\n\n");
+						printf("\tNo such node was found\n\n");
 					else
 					{
 						delete (row_head, column_head, row_data, column_data);
@@ -236,11 +236,29 @@ int delete(node_pointer r_h[], node_pointer c_h[], int r, int c)
 	r_aux = c_h[j];
 
 	// BREAK ROW LIST CONNECTIONS
-	if (c > r_h[i]->column)
+	if (c < r_h[i]->column)
 	{
+		printf("\tNo such node was found\n");
+		return 0;
+	}
+	else if (c > r_h[i]->column)
+	{
+		// this catches the case that there is only the head and someone inputs something larger than it
+		if (c_aux->next == NULL)
+		{
+			printf("\tNo such node was found\n");
+			return 0;
+		}
+
 		while (c_aux->next != NULL && c_aux->next->column < c)
 		{
 			c_aux = c_aux->next;
+
+			if (c_aux->next == NULL)
+			{
+				printf("\tNo such node was found\n");
+				return 0;
+			}
 		}
 
 		if (c_aux->next->column == c)
@@ -258,6 +276,11 @@ int delete(node_pointer r_h[], node_pointer c_h[], int r, int c)
 				c_aux->next = node_to_delete->next; // could as well be c_aux->next = NULL
 				printf("\tBack node: %d.%d\n\tNext node: NULL\n", c_aux->row, c_aux->column);
 			}
+		}
+		else
+		{
+			printf("\tNo such node was found\n");
+			return 0;
 		}
 	}
 	else if (c == r_h[i]->column && r_h[i]->next != NULL)
@@ -280,11 +303,28 @@ int delete(node_pointer r_h[], node_pointer c_h[], int r, int c)
 	}
 
 	// BREAK COLUMN LIST CONNECTIONS
-	if (r > c_h[j]->row)
+	if (r < c_h[j]->row)
 	{
+		printf("\tFORBIDDEN\n");
+		exit(2);
+	}
+	else if (r > c_h[j]->row)
+	{
+		if (r_aux->down == NULL)
+		{
+			printf("\tFORBIDDEN\n");
+			exit(2);
+		}
+
 		while (r_aux->down != NULL && r_aux->down->row < r)
 		{
 			r_aux = r_aux->down;
+
+			if (r_aux->down == NULL)
+			{
+				printf("\tFORBIDDEN\n");
+				exit(2);
+			}
 		}
 
 		if (r_aux->down->row == r)
@@ -302,6 +342,11 @@ int delete(node_pointer r_h[], node_pointer c_h[], int r, int c)
 				r_aux->down = node_to_delete->down; // could as well be r_aux->down = NULL
 				printf("\tUp node: %d.%d\n\tDown node: NULL\n", r_aux->row, r_aux->column);
 			}
+		}
+		else
+		{
+			printf("\tFORBIDDEN\n");
+			exit(2);
 		}
 	}
 	else if (r == c_h[j]->row && c_h[j]->down != NULL)
