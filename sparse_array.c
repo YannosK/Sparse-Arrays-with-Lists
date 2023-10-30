@@ -1,5 +1,8 @@
 /*
-Might be asyncronous with other branches
+SPARSE ARRAY
+
+A 30x30 sparse array
+no nodes where i=j are allowed
 */
 #include <stdio.h>
 #include <stdlib.h>
